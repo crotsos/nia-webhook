@@ -27,21 +27,22 @@ install_aliases()
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
+@app.route("/", methods=["GET"])
 def home():
     return "Network Intent Assistent Webhook APIs"
 
 
-@app.route('/webhook', methods=['POST'])
+@app.route("/webhook", methods=["POST"])
 def webhook():
     req = request.get_json(silent=True, force=True)
 
     print("Request: {}".format(json.dumps(req, indent=4)))
     res = build_nip(req)
+    res = json.dumps(res, indent=4)
     print("Response: {}".format(json.dumps(res, indent=4)))
 
     r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
+    r.headers["Content-Type"] = "application/json"
     return r
 
 
@@ -49,12 +50,14 @@ def build_nip(req):
     result = req.get("result")
     parameters = result.get("parameters")
 
-    middleboxes = parameters.get('middlebox')
-    target = parameters.get('policy-target')
-    print('args', middleboxes, target)
-    nip = 'define intent customIntent:' + '\n   add ' + map(lambda mb: mb + ', ', middleboxes) + '\n   for ' + map(lambda pt: pt + ', ', target)
+    middleboxes = parameters.get("middlebox")
+    target = parameters.get("policy-target")
+    print("args", middleboxes, target)
+    nip = ("define intent customIntent:" +
+           "\n   add {}".format(''.join(map(lambda mb: "middlebox(" + mb + "), ", middleboxes))) +
+           "\n   for {}".format(''.join(map(lambda pt: "client(" + pt + "), ", target))))
 
-    speech = 'The info you gave me generated this program:\n ' + nip + '\n Is this what you want?'
+    speech = "The info you gave me generated this program:\n " + nip + "\n Is this what you want?"
 
     print("Response:", speech)
 
@@ -67,9 +70,9 @@ def build_nip(req):
     }
 
 
-if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 5000))
 
     print("Starting app on port %d" % port)
 
-    app.run(debug=False, port=port, host='0.0.0.0')
+    app.run(debug=False, port=port, host="0.0.0.0")
