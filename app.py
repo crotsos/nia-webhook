@@ -17,9 +17,6 @@ from __future__ import print_function
 
 import json
 import os
-from urllib.error import HTTPError
-from urllib.parse import urlencode, urlparse
-from urllib.request import Request, urlopen
 
 from flask import Flask, make_response, request
 from future.standard_library import install_aliases
@@ -28,6 +25,11 @@ install_aliases()
 
 # Flask app should start in global layout
 app = Flask(__name__)
+
+
+@app.route('/', methods=['GET'])
+def home():
+    return "Network Intent Assistent Webhook APIs"
 
 
 @app.route('/webhook', methods=['POST'])
@@ -50,9 +52,7 @@ def build_nip(req):
     middleboxes = parameters.get('middlebox')
     target = parameters.get('policy-target')
     console.log('args', middleboxes, target)
-    nip = 'define intent customIntent:' +
-        '\n   add ' + map(lambda mb: mb + ', ', middleboxes) +
-        '\n   for ' + map(lambda pt: pt + ', ', target)
+    nip = 'define intent customIntent:' + '\n   add ' + map(lambda mb: mb + ', ', middleboxes) + '\n   for ' + map(lambda pt: pt + ', ', target)
 
     speech = 'The info you gave me generated this program:\n ' + nip + '\n Is this what you want?'
 
