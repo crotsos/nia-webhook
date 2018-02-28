@@ -18,6 +18,7 @@ from __future__ import print_function
 import json
 import os
 
+from actions import *
 from flask import Flask, make_response, request
 from future.standard_library import install_aliases
 
@@ -29,7 +30,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def home():
-    return "Network Intent Assistent Webhook APIs"
+    return "Network Intent Assistent (Nia) Webhook APIs"
 
 
 @app.route("/webhook", methods=["POST"])
@@ -37,37 +38,16 @@ def webhook():
     req = request.get_json(silent=True, force=True)
 
     print("Request: {}".format(json.dumps(req, indent=4)))
-    res = build_nip(req)
+    try:
+        res = actions[req.get("result").get("action")](req)
+    except:
+        res = {"message": "Action not mapped in webhook."}
     res = json.dumps(res, indent=4)
     print("Response: {}".format(json.dumps(res, indent=4)))
 
     r = make_response(res)
     r.headers["Content-Type"] = "application/json"
     return r
-
-
-def build_nip(req):
-    result = req.get("result")
-    parameters = result.get("parameters")
-
-    middleboxes = parameters.get("middlebox")
-    target = parameters.get("policy-target")
-    print("args", middleboxes, target)
-    nip = ("define intent customIntent:" +
-           "\n   add {}".format(''.join(map(lambda mb: "middlebox(" + mb + "), ", middleboxes))) +
-           "\n   for {}".format(''.join(map(lambda pt: "client(" + pt + "), ", target))))
-
-    speech = "The info you gave me generated this program:\n " + nip + "\n Is this what you want?"
-
-    print("Response:", speech)
-
-    return {
-        "speech": speech,
-        "displayText": speech,
-        # "data": data,
-        # "contextOut": [],
-        "source": "nia"
-    }
 
 
 if __name__ == "__main__":
