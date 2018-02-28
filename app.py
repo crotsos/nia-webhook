@@ -51,7 +51,7 @@ def build_nip(req):
 
     middleboxes = parameters.get('middlebox')
     target = parameters.get('policy-target')
-    console.log('args', middleboxes, target)
+    print('args', middleboxes, target)
     nip = 'define intent customIntent:' + '\n   add ' + map(lambda mb: mb + ', ', middleboxes) + '\n   for ' + map(lambda pt: pt + ', ', target)
 
     speech = 'The info you gave me generated this program:\n ' + nip + '\n Is this what you want?'
