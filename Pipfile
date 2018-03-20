@@ -13,3 +13,8 @@ name = "pypi"
 
 flask = "*"
 future = "*"
+keras = "*"
+numpy = "*"
+tensorflow = "*"
+"h5py" = "*"
+nltk = "*"
