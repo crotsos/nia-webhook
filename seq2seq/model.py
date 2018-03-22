@@ -28,18 +28,23 @@ class AttentionSeq2Seq:
         self.input_words = pad_sequences(self.input_words, maxlen=self.input_max_len, dtype='int32')
         self.output_words = pad_sequences(self.output_words, maxlen=self.output_max_len, dtype='int32')
 
+        print('[INFO] Creating model...')
         self.model = Sequential()
 
+        print('[INFO] Creating encoder...')
         # Creating encoder network
         self.model.add(Embedding(self.input_vocab_len, 1000, input_length=self.input_max_len, mask_zero=True))
         self.model.add(LSTM(config.MODEL_HIDDEN_DIM))
 
+        print('[INFO] Creating decoder...')
         # Creating decoder network
         self.model.add(RepeatVector(self.output_max_len))
         for i in range(config.MODEL_HIDDEN_LAYERS):
             self.model.add(LSTM(config.MODEL_HIDDEN_DIM, return_sequences=True))
         self.model.add(TimeDistributed(Dense(self.output_vocab_len)))
         self.model.add(Activation(config.MODEL_ACTIVATION))
+
+        print('[INFO] Compiling model...')
         self.model.compile(loss=config.MODEL_LOSS, optimizer=config.MODEL_OPTIMIZER,  metrics=config.MODEL_METRICS)
 
     def train(self):
@@ -62,12 +67,12 @@ class AttentionSeq2Seq:
             self.input_words = self.input_words[indices]
             self.output_words = self.output_words[indices]
 
-            # Training 10000 sequences at a time
-            for i in range(0, len(self.input_words), 10000):
-                if i + 10000 >= len(self.input_words):
+            # Training 1000 sequences at a time
+            for i in range(0, len(self.input_words), 5000):
+                if i + 5000 >= len(self.input_words):
                     i_end = len(self.input_words)
                 else:
-                    i_end = i + 10000
+                    i_end = i + 5000
                 output_sequences = encoding.vectorize(self.output_words[i:i_end], self.output_max_len, self.output_word_to_index)
 
                 print('[INFO] Training model: epoch {}th {}/{} samples'.format(k, i, len(self.input_words)))
@@ -80,7 +85,6 @@ class AttentionSeq2Seq:
             print('[INFO] Saved weights found, loading...', self.saved_weights)
             epoch = self.saved_weights[self.saved_weights.rfind('_') + 1:self.saved_weights.rfind('.')]
             self.model.load_weights(self.saved_weights)
-            k_start = int(epoch) + 1
 
         if len(self.saved_weights) == 0:
             print("The network hasn't been trained! Program will exit...")
@@ -95,9 +99,10 @@ class AttentionSeq2Seq:
             inputs = []
             outputs = []
             for input_sequence, prediction in zip(self.input_words, predictions):
-                print prediction
+
                 entities = ' '.join([self.input_index_to_word[index] for index in input_sequence if index > 0])
                 sequence = ' '.join([self.output_index_to_word[index] for index in prediction if index > 0])
+                print(prediction)
                 print(entities)
                 print(sequence)
                 inputs.append(entities)
@@ -105,6 +110,26 @@ class AttentionSeq2Seq:
 
             np.savetxt(config.MODEL_TEST_INPUT_PATH, inputs, fmt='%s')
             np.savetxt(config.MODEL_TEST_RESULT_PATH, outputs, fmt='%s')
+
+    def predict(self, entities):
+        sequence = ''
+        self.saved_weights = find_checkpoint_file()
+        if len(self.saved_weights) != 0:
+            print('[INFO] Saved weights found, loading...', self.saved_weights)
+            epoch = self.saved_weights[self.saved_weights.rfind('_') + 1:self.saved_weights.rfind('.')]
+            self.model.load_weights(self.saved_weights)
+
+        if len(self.saved_weights) == 0:
+            print("The network hasn't been trained! Program will exit...")
+        else:
+            print('[INFO] Testing...')
+            self.model.load_weights(self.saved_weights)
+
+            entities = encoding.index(entities, self.input_word_to_index)
+            predictions = np.argmax(self.model.predict([entities]), axis=2)
+            sequence = ' '.join([self.output_index_to_word[index] for index in prediction if index > 0])
+
+        return sequence
 
 
 def find_checkpoint_file():
