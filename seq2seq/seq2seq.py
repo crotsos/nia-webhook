@@ -14,17 +14,20 @@ def deanonymize(intent, username, origin, destination, targets, middleboxes, qos
     intent = intent.replace('@location', origin, 1) if origin is not None else intent
     intent = intent.replace('@location', destination, 1) if destination is not None else intent
 
-    for target in targets:
-        intent = intent.replace('@target', target, 1)
+    if targets is not None:
+        for target in targets:
+            intent = intent.replace('@target', target, 1)
 
-    for mb in middleboxes:
-        intent += intent.replace('@middlebox', mb, 1)
+    if middleboxes is not None:
+        for mb in middleboxes:
+            intent = intent.replace('@middlebox', mb, 1)
 
-    for metric in qos:
-        intent = intent.replace('@qos_metric', metric['name'], 1)
-        intent = intent.replace('@qos_constraint', metric['constraint'], 1)
-        if metric['constraint'] is not 'none':
-            intent = intent.replace('@qos_value', metric['value'], 1)
+    if qos is not None:
+        for metric in qos:
+            intent = intent.replace('@qos_metric', metric['name'], 1)
+            intent = intent.replace('@qos_constraint', metric['constraint'], 1)
+            if metric['constraint'] is not 'none':
+                intent = intent.replace('@qos_value', metric['value'], 1)
 
     intent = intent.replace('@hour', start) if start is not None else intent
     intent = intent.replace('@hour', end) if end is not None else intent
@@ -40,16 +43,19 @@ def anonymize(username, origin, destination, targets, middleboxes, qos, start, e
     entities += '@location ' if origin is not None else ''
     entities += '@location ' if destination is not None else ''
 
-    for target in targets:
-        entities += '@target '
+    if targets is not None:
+        for target in targets:
+            entities += '@target '
 
-    for mb in middleboxes:
-        entities += '@middlebox '
+    if middleboxes is not None:
+        for mb in middleboxes:
+            entities += '@middlebox '
 
-    for metric in qos:
-        entities += '@qos_metric ' + '@qos_constraint '
-        if metric['constraint'] is not 'none':
-            entities += '@qos_value'
+    if qos is not None:
+        for metric in qos:
+            entities += '@qos_metric ' + '@qos_constraint '
+            if metric['constraint'] is not 'none':
+                entities += '@qos_value'
 
     entities += '@hour ' if start is not None else ''
     entities += '@hour ' if end is not None else ''
@@ -57,15 +63,16 @@ def anonymize(username, origin, destination, targets, middleboxes, qos, start, e
     entities += 'allow @traffic ' if allow is not None else ''
     entities += 'block @traffic ' if block is not None else ''
 
-    return trim(entities)
+    return entities.strip()
 
 
-def predict(username, origin, destination, targets, middleboxes, qos, start, end, allow, block):
+def translate(username, origin, destination, targets, middleboxes, qos, start, end, allow, block):
     global seq2seq
     entities = anonymize(username, origin, destination, targets, middleboxes, qos, start, end, allow, block)
+    print('entities', entities)
     intent = seq2seq.predict(entities)
     print('intent', intent)
-    result = deanonymize(deanonymize, username, origin, destination, targets, middleboxes, qos, start, end, allow, block)
+    result = deanonymize(intent, username, origin, destination, targets, middleboxes, qos, start, end, allow, block)
     print('result', result)
 
     return result
@@ -87,3 +94,4 @@ def init():
 
 if __name__ == "__main__":
     init()
+    print(translate("asjacobs", "backend", "office", ["University"], ["firewall", "vpn"], None, None, None, None, None))

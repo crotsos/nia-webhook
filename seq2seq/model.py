@@ -10,6 +10,7 @@ from keras.layers.recurrent import LSTM
 from keras.models import Sequential
 from keras.optimizers import Adam, RMSprop
 from keras.preprocessing.sequence import pad_sequences
+from keras.preprocessing.text import text_to_word_sequence
 
 
 class AttentionSeq2Seq:
@@ -122,11 +123,11 @@ class AttentionSeq2Seq:
         if len(self.saved_weights) == 0:
             print("The network hasn't been trained! Program will exit...")
         else:
-            print('[INFO] Testing...')
-            self.model.load_weights(self.saved_weights)
-
+            print('[INFO] Predicting...')
+            entities = [text_to_word_sequence(entities, filters=config.DATASET_FILTERS)]
             entities = encoding.index(entities, self.input_word_to_index)
-            predictions = np.argmax(self.model.predict([entities]), axis=2)
+            entities = pad_sequences(entities, maxlen=self.input_max_len, dtype='int32')
+            prediction = np.argmax(self.model.predict(entities), axis=2)[0]
             sequence = ' '.join([self.output_index_to_word[index] for index in prediction if index > 0])
 
         return sequence
