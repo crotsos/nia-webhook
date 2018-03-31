@@ -12,4 +12,4 @@ define intent qosIntent:
   end   hour('18:00')
   allow traffic('http'),
           traffic('udp')
-  block flow('udp', '123')
+  block flow(traffic:'udp', dest_port:'123')
