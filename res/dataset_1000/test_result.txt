@@ -1,0 +1,200 @@
+define intent @idintent: start hour("@hour") hour("@hour") hour("@hour") with with with @qos_metric("@qos_constraint","@qos_value"), from trafic("@traffic") trafic("@traffic") trafic("@traffic")
+define intent @idintent: hour("@hour") end hour("@hour") with to allow block block trafic("@traffic") trafic("@traffic")
+define @idintent: @idintent: block block trafic("@traffic")
+define intent @idintent: client("@target") add middlebox("@middlebox") with from trafic("@traffic")
+middlebox("@middlebox"), middlebox("@middlebox"), middlebox("@middlebox"), @qos_metric("@qos_constraint","@qos_value") to endpoint("@location") allow allow from from from trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+define intent @idintent: for client("@target") block block
+define intent @idintent: start hour("@hour") end with
+intent @idintent: @idintent: client("@target") add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") block trafic("@traffic")
+@idintent: add
+intent intent @idintent: end hour("@hour") trafic("@traffic") trafic("@traffic")
+intent @idintent: middlebox("@middlebox") block trafic("@traffic")
+define intent @idintent: start end hour("@hour") with from trafic("@traffic")
+define intent @idintent: hour("@hour") with with trafic("@traffic") trafic("@traffic")
+define @idintent: @idintent: end from trafic("@traffic") trafic("@traffic")
+define intent @idintent: hour("@hour") for with @qos_metric("@qos_constraint","@qos_value") block trafic("@traffic")
+define intent @idintent: start end hour("@hour") with
+define intent intent @idintent: end hour("@hour") for with @qos_metric("@qos_constraint","@qos_value"), from trafic("@traffic")
+define intent @idintent: @idintent: end hour("@hour")
+
+intent @idintent: add middlebox("@middlebox") middlebox("@middlebox") from
+define intent @idintent: start end end with with @qos_metric("@qos_constraint","@qos_value"), trafic("@traffic")
+define intent @idintent: for add add middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value") to allow endpoint("@location") endpoint("@location") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+
+intent @idintent: add middlebox("@middlebox") trafic("@traffic") trafic("@traffic")
+define @idintent: @idintent: from
+intent @idintent: middlebox("@middlebox") middlebox("@middlebox") trafic("@traffic")
+define intent @idintent: @idintent: for for client("@target") block trafic("@traffic")
+intent @idintent: @idintent: end hour("@hour") from trafic("@traffic")
+define intent @idintent: end with with from trafic("@traffic")
+define intent @idintent: end with from trafic("@traffic")
+define intent @idintent: end end with with from trafic("@traffic")
+intent @idintent: end hour("@hour") with with trafic("@traffic") trafic("@traffic")
+define intent @idintent: @idintent: with block trafic("@traffic") trafic("@traffic")
+intent add middlebox("@middlebox") middlebox("@middlebox") trafic("@traffic")
+define intent @idintent: start hour("@hour") hour("@hour") for client("@target") client("@target") with @qos_metric("@qos_constraint","@qos_value"), from trafic("@traffic")
+intent @idintent: add middlebox("@middlebox") middlebox("@middlebox") block trafic("@traffic")
+define intent @idintent: hour("@hour") for client("@target"), client("@target") block trafic("@traffic")
+define intent @idintent: for client("@target") add add middlebox("@middlebox") to allow block block trafic("@traffic")
+define intent @idintent: end hour("@hour") with from trafic("@traffic")
+define intent @idintent: end with with from trafic("@traffic")
+@idintent: add middlebox("@middlebox") block block
+define intent @idintent: for client("@target") add add middlebox("@middlebox") to allow block block trafic("@traffic")
+define intent @idintent: end hour("@hour") with with from trafic("@traffic")
+define intent @idintent: start hour("@hour") hour("@hour") for add add middlebox("@middlebox") with
+define intent @idintent: @idintent: from trafic("@traffic")
+@idintent: for
+define intent @idintent: for client("@target") block block
+intent @idintent: for client("@target") add middlebox("@middlebox") with block block trafic("@traffic")
+define intent @idintent: end hour("@hour") trafic("@traffic") trafic("@traffic")
+define intent @idintent: @idintent:
+define intent @idintent: end hour("@hour") with with from trafic("@traffic")
+define intent @idintent: hour("@hour") for client("@target"), client("@target") block trafic("@traffic")
+define intent @idintent: end end from from trafic("@traffic")
+define intent @idintent: start end end with with @qos_metric("@qos_constraint","@qos_value"), trafic("@traffic")
+@idintent: @idintent: add add middlebox("@middlebox")
+define intent @idintent: hour("@hour") end hour("@hour") with with from trafic("@traffic")
+@idintent: add middlebox("@middlebox") middlebox("@middlebox") trafic("@traffic")
+define intent @idintent: for client("@target") add middlebox("@middlebox") with with from trafic("@traffic")
+define intent @idintent: @idintent: for with block trafic("@traffic") trafic("@traffic")
+define intent @idintent: end hour("@hour") for client("@target") to endpoint("@location") block block trafic("@traffic") trafic("@traffic")
+define intent intent @idintent: start end end hour("@hour") with @qos_metric("@qos_constraint","@qos_value"), from
+define intent @idintent: end hour("@hour") with with from trafic("@traffic")
+define intent @idintent: start hour("@hour") add
+define intent @idintent: end hour("@hour") from trafic("@traffic")
+define @idintent: add middlebox("@middlebox") middlebox("@middlebox") trafic("@traffic")
+define intent @idintent: @idintent:
+define intent @idintent: hour("@hour") for with with block trafic("@traffic")
+@idintent: add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox")
+intent @idintent: @idintent: end hour("@hour")
+add add
+middlebox("@middlebox"), middlebox("@middlebox"), middlebox("@middlebox"), middlebox("@middlebox") trafic("@traffic") intent @idintent: @idintent: for client("@target") add middlebox("@middlebox"), middlebox("@middlebox")
+define intent intent start hour("@hour") end hour("@hour") with with from
+define intent intent @idintent: start end end hour("@hour") with @qos_metric("@qos_constraint","@qos_value"), from
+@idintent: add middlebox("@middlebox") block trafic("@traffic")
+@idintent: @idintent: middlebox("@middlebox")
+define intent @idintent: for client("@target") block block trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") intent intent @idintent:
+define intent @idintent: end with with from trafic("@traffic")
+@idintent: add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox")
+intent @idintent: add middlebox("@middlebox"), middlebox("@middlebox") from trafic("@traffic")
+define intent @idintent: @idintent: end
+@idintent: add add
+intent @idintent: middlebox("@middlebox") block trafic("@traffic")
+define intent @idintent: hour("@hour") for client("@target") from trafic("@traffic")
+intent @idintent: @idintent: trafic("@traffic") trafic("@traffic")
+define @idintent: @idintent: end from trafic("@traffic") trafic("@traffic")
+define intent @idintent: for add add middlebox("@middlebox") to endpoint("@location") allow endpoint("@location") block trafic("@traffic")
+intent @idintent: middlebox("@middlebox")
+intent @idintent: add middlebox("@middlebox") trafic("@traffic")
+add add middlebox("@middlebox"), middlebox("@middlebox") block block
+@idintent: add add
+define intent intent start hour("@hour") end hour("@hour") with with from
+define intent @idintent: @idintent: client("@target") add middlebox("@middlebox"), middlebox("@middlebox") @qos_metric("@qos_constraint","@qos_value") to endpoint("@location") allow endpoint("@location") from trafic("@traffic")
+intent @idintent: for client("@target") add middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"), from trafic("@traffic")
+client("@target"), middlebox("@middlebox"), middlebox("@middlebox"), @qos_metric("@qos_constraint","@qos_value") endpoint("@location") endpoint("@location") allow allow endpoint("@location") block trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+@idintent: @idintent: middlebox("@middlebox") trafic("@traffic") trafic("@traffic")
+@idintent: @idintent: add middlebox("@middlebox") middlebox("@middlebox")
+define intent @idintent: start end hour("@hour") add middlebox("@middlebox") middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"),
+@idintent: add
+intent add middlebox("@middlebox") from
+intent add middlebox("@middlebox"), middlebox("@middlebox") endpoint("@location") endpoint("@location") block block trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+@idintent: middlebox("@middlebox") block trafic("@traffic")
+define intent @idintent: for client("@target") add middlebox("@middlebox") with block block trafic("@traffic")
+intent @idintent: @idintent: with from trafic("@traffic") trafic("@traffic")
+define intent @idintent: @idintent: end hour("@hour") with block trafic("@traffic")
+define intent @idintent: for client("@target") block trafic("@traffic") trafic("@traffic")
+define
+intent @idintent: @idintent: with from trafic("@traffic") trafic("@traffic")
+@idintent: add add middlebox("@middlebox") block trafic("@traffic")
+define intent @idintent: end end hour("@hour") with from trafic("@traffic")
+define intent @idintent: start end for client("@target") with from trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+define intent @idintent: for for client("@target") add middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value") to endpoint("@location") allow endpoint("@location") from trafic("@traffic")
+intent @idintent: @idintent: with from trafic("@traffic") trafic("@traffic")
+define intent @idintent: end end hour("@hour") with from trafic("@traffic")
+define intent intent @idintent: hour("@hour") hour("@hour") for client("@target") add middlebox("@middlebox") middlebox("@middlebox") block block
+intent add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") block
+define intent @idintent: @idintent: end for add add middlebox("@middlebox") with
+@idintent: @idintent: block block
+define intent @idintent: hour("@hour") hour("@hour") with with with from from trafic("@traffic")
+define @idintent: @idintent: client("@target") add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"), trafic("@traffic") trafic("@traffic") trafic("@traffic")
+define intent @idintent: for client("@target"), client("@target") add middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value") trafic("@traffic")
+define intent @idintent: hour("@hour") for client("@target"), client("@target") block trafic("@traffic")
+intent @idintent: add middlebox("@middlebox"), middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"), from trafic("@traffic")
+
+define intent @idintent: @idintent: with @qos_metric("@qos_constraint","@qos_value"), trafic("@traffic")
+define intent @idintent: add add middlebox("@middlebox"), middlebox("@middlebox") to endpoint("@location") allow block block trafic("@traffic") trafic("@traffic")
+intent add middlebox("@middlebox") from
+define intent @idintent: start end with with from trafic("@traffic")
+define intent @idintent: start end end with with from trafic("@traffic")
+define intent @idintent: @idintent: for client("@target") add middlebox("@middlebox"), middlebox("@middlebox") to to endpoint("@location") allow block
+define intent intent @idintent: end for client("@target"), client("@target") add middlebox("@middlebox"), middlebox("@middlebox") with to endpoint("@location") allow endpoint("@location") block trafic("@traffic")
+define intent @idintent: end with with from trafic("@traffic")
+@idintent: @idintent: add add middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"), from trafic("@traffic")
+define intent @idintent: start end with with from trafic("@traffic")
+define intent intent start hour("@hour") with to endpoint("@location") allow block trafic("@traffic") trafic("@traffic") trafic("@traffic")
+define intent @idintent: for client("@target") block block trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") intent intent @idintent:
+define intent @idintent: for client("@target") block block trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic") intent intent @idintent:
+define intent @idintent: end end hour("@hour") from trafic("@traffic")
+define intent @idintent: start end add add middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"), trafic("@traffic") trafic("@traffic")
+@idintent: add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox")
+define intent @idintent: start end hour("@hour") with with
+define intent @idintent: add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") with with from trafic("@traffic") trafic("@traffic") trafic("@traffic")
+add
+define intent @idintent: @idintent: block trafic("@traffic")
+define intent @idintent: end end from from trafic("@traffic")
+define intent @idintent: @idintent: hour("@hour") for client("@target") from trafic("@traffic")
+define intent @idintent: end with with from trafic("@traffic")
+intent @idintent: @idintent: for client("@target") trafic("@traffic") trafic("@traffic")
+define define define intent @idintent: start hour("@hour") hour("@hour") end for client("@target") add middlebox("@middlebox") with to endpoint("@location") allow endpoint("@location") block trafic("@traffic") trafic("@traffic")
+define intent @idintent: start end add add middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"), trafic("@traffic") trafic("@traffic")
+define intent @idintent: for client("@target"), client("@target") add middlebox("@middlebox"), middlebox("@middlebox") with
+@idintent: add middlebox("@middlebox") middlebox("@middlebox") from trafic("@traffic")
+intent @idintent: add middlebox("@middlebox") middlebox("@middlebox") from
+define intent hour("@hour") hour("@hour") hour("@hour") for client("@target"), add middlebox("@middlebox") middlebox("@middlebox") with to to endpoint("@location") allow endpoint("@location") block trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+intent add middlebox("@middlebox") from trafic("@traffic")
+define intent @idintent: start hour("@hour") end hour("@hour") with with from trafic("@traffic")
+@idintent: @idintent: client("@target") add middlebox("@middlebox") to endpoint("@location") allow block block trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+intent @idintent: for client("@target") add middlebox("@middlebox") with block block trafic("@traffic") trafic("@traffic")
+define @idintent: @idintent: client("@target") add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"), trafic("@traffic") trafic("@traffic") trafic("@traffic")
+@idintent: @idintent: add add middlebox("@middlebox")
+define intent @idintent: start end hour("@hour") with with with from trafic("@traffic") trafic("@traffic")
+@idintent: @idintent: add middlebox("@middlebox") middlebox("@middlebox")
+define intent @idintent: end end hour("@hour") with from trafic("@traffic")
+define intent @idintent: start hour("@hour") hour("@hour") client("@target") add middlebox("@middlebox") middlebox("@middlebox") block trafic("@traffic")
+intent @idintent: start hour("@hour") hour("@hour") with with with with from trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+intent @idintent: start hour("@hour") hour("@hour") with with with with from trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+define intent @idintent: end hour("@hour") with @qos_metric("@qos_constraint","@qos_value"), trafic("@traffic") trafic("@traffic")
+define intent @idintent: for client("@target") add middlebox("@middlebox"), middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"), block trafic("@traffic") trafic("@traffic")
+define intent @idintent: @idintent: end
+@idintent: @idintent: add add middlebox("@middlebox")
+define intent @idintent: @idintent: for with block trafic("@traffic") trafic("@traffic")
+@idintent: add add middlebox("@middlebox") middlebox("@middlebox")
+define intent @idintent: start end hour("@hour") middlebox("@middlebox") from trafic("@traffic")
+define intent @idintent: with with from
+define intent @idintent: start end with with block trafic("@traffic")
+define intent @idintent: start end hour("@hour") with with with from trafic("@traffic") trafic("@traffic")
+@idintent: for add middlebox("@middlebox") middlebox("@middlebox") block block block trafic("@traffic") trafic("@traffic")
+define intent @idintent: for add add middlebox("@middlebox") to endpoint("@location") allow endpoint("@location") block trafic("@traffic")
+intent intent @idintent: end hour("@hour") trafic("@traffic") trafic("@traffic")
+define intent @idintent: @idintent: for client("@target") add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") to endpoint("@location") allow
+@idintent: @idintent:
+define intent intent @idintent: start end end hour("@hour") with @qos_metric("@qos_constraint","@qos_value"), from
+@idintent: add middlebox("@middlebox") middlebox("@middlebox") trafic("@traffic")
+intent @idintent: @idintent: client("@target") block block
+intent @idintent: middlebox("@middlebox")
+define define intent @idintent: start hour("@hour") hour("@hour") hour("@hour") for client("@target") add middlebox("@middlebox") with to endpoint("@location") allow endpoint("@location") block trafic("@traffic") trafic("@traffic")
+define intent @idintent: for client("@target") add add middlebox("@middlebox") to allow block block trafic("@traffic")
+intent @idintent: middlebox("@middlebox") middlebox("@middlebox") trafic("@traffic")
+define intent @idintent: end hour("@hour") trafic("@traffic")
+define intent @idintent: start hour("@hour") end hour("@hour") add middlebox("@middlebox") @qos_metric("@qos_constraint","@qos_value") to endpoint("@location") allow endpoint("@location") block trafic("@traffic") trafic("@traffic")
+define intent intent @idintent: hour("@hour") end hour("@hour") client("@target") with @qos_metric("@qos_constraint","@qos_value"), block trafic("@traffic")
+define intent @idintent: @idintent: block block trafic("@traffic")
+define intent @idintent: end hour("@hour") from trafic("@traffic")
+define intent @idintent: end end hour("@hour") from trafic("@traffic")
+
+define define intent @idintent: start hour("@hour") hour("@hour") hour("@hour") with @qos_metric("@qos_constraint") to endpoint("@location") allow from trafic("@traffic") trafic("@traffic") trafic("@traffic") trafic("@traffic")
+intent @idintent: add middlebox("@middlebox") trafic("@traffic")
+@idintent: @idintent: add add middlebox("@middlebox") with @qos_metric("@qos_constraint","@qos_value"), from trafic("@traffic")
+intent @idintent: @idintent: end hour("@hour")
+define intent @idintent: end hour("@hour") with with from trafic("@traffic")
+@idintent: @idintent: add middlebox("@middlebox") middlebox("@middlebox")

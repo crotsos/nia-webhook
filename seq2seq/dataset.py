@@ -3,9 +3,8 @@ from random import randint, sample
 import config
 from keras.preprocessing.text import text_to_word_sequence
 
-
-def get_intent(username, origin, destination, targets, middleboxes, qos, start, end, allow, block):
-    intent = 'define intent ' + username + 'Intent:'
+def get_intent(id, origin, destination, targets, middleboxes, qos, start, end, allow, block):
+    intent = 'define intent ' + id + 'Intent:'
     if origin:
         intent = intent + ' from endpoint("' + origin + '")'
     if destination:
@@ -35,7 +34,7 @@ def get_intent(username, origin, destination, targets, middleboxes, qos, start, 
                 intent = intent + ' with '
 
             intent = intent + metric['name'] + '("' + metric['constraint']
-            intent = intent + '","' + metric['value'] + '")' if metric['constraint'] is not 'none' else intent + '")'
+            intent = intent + '","' + metric['value'] + '")' if metric['value'] else intent + '")'
 
             if index != (len(qos) - 1):
                 intent = intent + ', '
@@ -43,7 +42,7 @@ def get_intent(username, origin, destination, targets, middleboxes, qos, start, 
     if start:
         intent = intent + ' start hour("' + start + '")'
     if end:
-        intent = intent + ' end hour("' + start + '")'
+        intent = intent + ' end hour("' + end + '")'
 
     if allow:
         if allow not in intent:
@@ -54,9 +53,8 @@ def get_intent(username, origin, destination, targets, middleboxes, qos, start, 
 
     return intent
 
-
-def get_entities(username, origin, destination, targets, middleboxes, qos, start, end, allow, block):
-    entities = username
+def get_entities(id, origin, destination, targets, middleboxes, qos, start, end, allow, block):
+    entities = id
     if origin:
         entities = entities + ' ' + origin
     if destination:
@@ -74,7 +72,7 @@ def get_entities(username, origin, destination, targets, middleboxes, qos, start
         if metric:
             if metric['name'] not in entities:
                 entities = entities + ' ' + metric['name'] + ' ' + metric['constraint']
-                if metric['constraint'] is not 'none':
+                if metric['value']:
                     entities = entities + ' ' + metric['value']
 
     if start:
@@ -91,9 +89,30 @@ def get_entities(username, origin, destination, targets, middleboxes, qos, start
 
     return entities
 
+def write(type):
+    with open(config.DATASET_PATH.format(config.FIT_DATASET_SIZE, type), 'wb') as file:
+        dataset_size = config.FIT_DATASET_SIZE if type == 'fit' else config.TEST_DATASET_SIZE
+        for i in range(dataset_size):
+            qos = []
+            for metric in range(randint(0, 2)):
+                qos.append({'name': '@qos_metric', 'constraint': '@qos_constraint', 'value': '@qos_value' if randint(0, 10) % 2 == 0 else None})
 
-def write():
-    with open(config.DATASET_PATH, 'wb') as file:
+            id = '@id'
+            origin = '@location' if randint(0, 10) % 2 == 0 else None
+            destination = '@location' if randint(0, 10) % 2 == 0 else None
+            target = ['@target' for i in range(randint(0, 2))]
+            mbs = ['@middlebox' for i in range(randint(0, 2))]
+            start = '@hour' if randint(0, 10) % 2 == 0 else None
+            end = '@hour' if start else None
+            allow = '@traffic' if randint(0, 10) % 2 == 0 else None
+            block = '@traffic' if randint(0, 10) % 2 == 0 else None
+            entities = get_entities(id, origin, destination, target, mbs, qos, start, end, allow, block)
+            intent = get_intent(id, origin, destination, target, mbs, qos, start, end, allow, block)
+            file.write(entities + ' > ' + intent + '\n')
+
+
+def write_alt(type):
+    with open(config.DATASET_PATH.format(config.FIT_DATASET_SIZE, type), 'wb') as file:
         for i in range(config.DATASET_SIZE):
             qos = []
             sampled_metrics = sample(config.DATASET_QOS_METRICS, randint(0, 4))
@@ -118,35 +137,13 @@ def write():
             intent = get_intent(username, origin, destination, target, mbs, qos, start, end, allow, block)
             file.write(entities + ' > ' + intent + '\n')
 
-
-def write_alt():
-    with open(config.DATASET_PATH, 'wb') as file:
-        for i in range(config.DATASET_SIZE):
-            qos = []
-            for metric in range(randint(0, 2)):
-                qos.append({'name': '@qos_metric', 'constraint': '@qos_constraint', 'value': '@qos_value'})
-
-            username = '@username'
-            origin = '@location' if randint(0, 10) % 2 == 0 else ''
-            destination = '@location' if randint(0, 10) % 2 == 0 else ''
-            target = ['@target' for i in range(randint(0, 2))]
-            mbs = ['@middlebox' for i in range(randint(0, 2))]
-            start = '@hour' if randint(0, 10) % 2 == 0 else ''
-            end = '@hour' if randint(0, 10) % 2 == 0 else ''
-            allow = '@traffic' if randint(0, 10) % 2 == 0 else ''
-            block = '@traffic' if randint(0, 10) % 2 == 0 else ''
-            entities = get_entities(username, origin, destination, target, mbs, qos, start, end, allow, block)
-            intent = get_intent(username, origin, destination, target, mbs, qos, start, end, allow, block)
-            file.write(entities + ' > ' + intent + '\n')
-
-
-def read():
+def read(type):
     lines = []
 
     input_words = []
     output_words = []
 
-    with open(config.DATASET_PATH, 'r') as f:
+    with open(config.DATASET_PATH.format(config.FIT_DATASET_SIZE, type), 'r') as f:
         lines = f.read().split('\n')
 
     for line in lines:
@@ -157,35 +154,6 @@ def read():
 
     return input_words, output_words
 
-
-def read_split():
-    lines = []
-
-    fit_input_words = []
-    fit_output_words = []
-
-    test_input_words = []
-    test_output_words = []
-
-    with open(config.DATASET_PATH, 'r') as f:
-        lines = f.read().split('\n')
-
-    fit_lines = sample(lines, int(len(lines) * 0.7))
-    for line in fit_lines:
-        if line and not line.startswith('#'):
-            input_text, output_text = line.split('>')
-            fit_input_words.append(text_to_word_sequence(input_text, filters=config.DATASET_FILTERS))
-            fit_output_words.append(text_to_word_sequence(output_text, filters=config.DATASET_FILTERS))
-
-    test_lines = list(set(lines) - set(fit_lines))
-    for line in test_lines:
-        if line and not line.startswith('#'):
-            input_text, output_text = line.split('>')
-            fit_input_words.append(text_to_word_sequence(input_text, filters=config.DATASET_FILTERS))
-            fit_output_words.append(text_to_word_sequence(output_text, filters=config.DATASET_FILTERS))
-
-    return fit_input_words, fit_output_words, test_input_words, test_output_words
-
-
 if __name__ == "__main__":
-    write_alt()
+    write('fit')
+    write('test')
