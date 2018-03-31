@@ -91,7 +91,7 @@ def get_entities(id, origin, destination, targets, middleboxes, qos, start, end,
 
 def write(type):
     with open(config.DATASET_PATH.format(config.FIT_DATASET_SIZE, type), 'wb') as file:
-        dataset_size = config.FIT_DATASET_SIZE if type == 'fit' else config.TEST_DATASET_SIZE
+        dataset_size = config.FIT_DATASET_SIZE if type == 'fit' else config.TEST_DATASET_SIZE if type == 'test' else config.FEEDBACK_DATASET_SIZE 
         for i in range(dataset_size):
             qos = []
             for metric in range(randint(0, 2)):
@@ -110,32 +110,6 @@ def write(type):
             intent = get_intent(id, origin, destination, target, mbs, qos, start, end, allow, block)
             file.write(entities + ' > ' + intent + '\n')
 
-
-def write_alt(type):
-    with open(config.DATASET_PATH.format(config.FIT_DATASET_SIZE, type), 'wb') as file:
-        for i in range(config.DATASET_SIZE):
-            qos = []
-            sampled_metrics = sample(config.DATASET_QOS_METRICS, randint(0, 4))
-            for metric in sampled_metrics:
-                sampled_constraint = sample(config.DATASET_QOS_CONSTRAINTS, 1)[0]
-                while metric[0] is 'bandwidth' and sampled_constraint is 'none':
-                    sampled_constraint = sample(config.DATASET_QOS_CONSTRAINTS, 1)[0]
-                qos.append({'name': metric[0], 'constraint': sampled_constraint, 'value': str(randint(0, 100)) + metric[1]})
-
-            username = sample(config.DATASET_USERNAMES, 1)[0]
-            origin = sample(config.DATASET_LOCATIONS, 1)[0]
-            destination = sample(config.DATASET_LOCATIONS, 1)[0]
-            while destination == origin:
-                destination = sample(config.DATASET_LOCATIONS, 1)[0]
-            target = sample(config.DATASET_TARGETS, 1)[0]
-            mbs = [mb for mb in sample(config.DATASET_MIDDLEBOXES, randint(0, len(config.DATASET_MIDDLEBOXES)))]
-            start = sample(config.DATASET_HOURS, 1)[0]
-            end = sample(config.DATASET_HOURS, 1)[0]
-            allow = sample(config.DATASET_TRAFFIC, 1)[0]
-            block = sample(config.DATASET_TRAFFIC, 1)[0]
-            entities = get_entities(username, origin, destination, target, mbs, qos, start, end, allow, block)
-            intent = get_intent(username, origin, destination, target, mbs, qos, start, end, allow, block)
-            file.write(entities + ' > ' + intent + '\n')
 
 def read(type):
     lines = []
@@ -157,3 +131,4 @@ def read(type):
 if __name__ == "__main__":
     write('fit')
     write('test')
+    write('feedback')

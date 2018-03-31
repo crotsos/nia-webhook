@@ -47,12 +47,12 @@ class AttentionSeq2Seq:
         print('[INFO] Compiling model...')
         self.model.compile(loss=config.MODEL_LOSS, optimizer=config.MODEL_OPTIMIZER,  metrics=config.MODEL_METRICS)
 
-    def train(self, input_words, output_words):
+    def train(self, input_words, output_words, index=True):
         k_start = self.load();
 
-
-        input_words = encoding.index(input_words, self.input_word_to_index)
-        output_words = encoding.index(output_words, self.output_word_to_index)
+        if index:
+            input_words = encoding.index(input_words, self.input_word_to_index)
+            output_words = encoding.index(output_words, self.output_word_to_index)
 
         # Zero padding
         input_words = pad_sequences(input_words, maxlen=self.input_max_len, dtype='int32')
@@ -114,24 +114,27 @@ class AttentionSeq2Seq:
 
     def predict(self, entities, expected_intent=None):
         intent = ''
+        r2_score = 0
         self.load();
 
         if len(self.saved_weights) == 0:
             print("The network hasn't been trained! Program will exit...")
         else:
             print('[INFO] Predicting...')
-            entities = [text_to_word_sequence(entities, filters=config.DATASET_FILTERS)]
+
+            entities = [text_to_word_sequence(entities, filters=config.DATASET_FILTERS) if not isinstance(entities, list) else entities]
             entities = encoding.index(entities, self.input_word_to_index)
             entities = pad_sequences(entities, maxlen=self.input_max_len, dtype='int32')
             if expected_intent:
-                expected_intent = [text_to_word_sequence(entities, filters=config.DATASET_FILTERS)]
-                expected_intent = encoding.index(entities, self.output_word_to_index)
-                expected_intent = pad_sequences(expected_intent, maxlen=self.output_max_len, dtype='int32')
+                expected_intent = [text_to_word_sequence(expected_intent, filters=config.DATASET_FILTERS) if not isinstance(expected_intent, list) else expected_intent]
+                expected_intent = encoding.index(expected_intent, self.output_word_to_index)
+                expected_intent = pad_sequences(expected_intent, maxlen=self.output_max_len, dtype='int32')[0]
 
             prediction = np.argmax(self.model.predict(entities), axis=2)[0]
             intent = ' '.join([self.output_index_to_word[index] for index in prediction if index > 0])
 
-        return intent, r2_score(expected_intent, prediction) if expected_intent else 0
+            r2_score = rsquared(expected_intent, prediction) if expected_intent is not None else 0
+        return intent, r2_score
 
     def load(self):
         epoch = 1
@@ -141,6 +144,10 @@ class AttentionSeq2Seq:
             epoch = self.saved_weights[self.saved_weights.rfind('_') + 1:self.saved_weights.rfind('.')]
             self.model.load_weights(self.saved_weights)
         return int(epoch)
+
+def rsquared(x, y):
+    slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)
+    return r_value**2
 
 def find_checkpoint_file():
     checkpoint_file = [config.MODEL_DIR.format(config.FIT_DATASET_SIZE) + f for f in os.listdir(config.MODEL_DIR.format(config.FIT_DATASET_SIZE)) if 'weights' in f]

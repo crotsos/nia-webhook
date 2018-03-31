@@ -1,13 +1,17 @@
 import numpy as np
+import csv
 
 import dataset
 import encoding
 import model
+import config
 
 train = True
-test = True
+test = False
 
 seq2seq = None
+fit_input_words = []
+fit_output_words = []
 
 
 def deanonymize(intent, id, origin, destination, targets, middleboxes, qos, start, end, allow, block):
@@ -80,42 +84,47 @@ def translate(id, origin, destination, targets, middleboxes, qos, start, end, al
 
 
 def init():
-    global seq2seq, train, test
+    global seq2seq, train, test, fit_input_words, fit_output_words
     fit_input_words, fit_output_words = dataset.read('fit')
     test_input_words, test_output_words = dataset.read('test')
-
     # Creating the network model
     seq2seq = model.AttentionSeq2Seq(fit_input_words, fit_output_words)
     if train:
         seq2seq.train(fit_input_words, fit_output_words)
         train = False
+        print(fit_input_words, fit_output_words)
 
     if test:
-        rsquared_list = seq2seq.test(test_input_words, test_output_words)
-        print("R-squared: {}".format(rsquared_list))
+        rsquared = seq2seq.test(test_input_words, test_output_words)
+        print("R-squared: {}".format(rsquared))
+        with open("../res/dataset_results.csv", "a") as file:
+            writer = csv.writer(file, delimiter=",")
+            writer.writerow([config.FIT_DATASET_SIZE, rsquared])
+
+
 
 
 def feedback():
-    global seq2seq
+    global seq2seq, fit_input_words, fit_output_words
     test_input_words, test_output_words = dataset.read('feedback')
 
-    rsquared_list = []
-    for index, test_input, test_output in enumerate(zip(test_input_words, test_output_words)):
-        print('entities', test_input)
-        intent, rsquared = seq2seq.predict(test_input, test_output)
-        print('intent: {}, rsquared: {}'.format(test_output, rsquared))
-        rsquared_list.append([index, rsquared]);
 
-
-    with open("res/dataset_{}/feedback_results.csv".format(config.FIT_DATASET_SIZE), "wb") as file:
+    with open("../res/dataset_{}/feedback_results.csv".format(config.FIT_DATASET_SIZE), "wb") as file:
         writer = csv.writer(file, delimiter=",")
         writer.writerow(['id', 'rsquared'])
-        for row in rsquared_list:
-            writer.writerow(row)
 
+        for index, (test_input, test_output) in enumerate(zip(test_input_words, test_output_words)):
+            print('entities', test_input)
+            intent, rsquared = seq2seq.predict(test_input, test_output)
+            print('intent: {}, rsquared: {}'.format(test_output, rsquared))
+            writer.writerow([index, rsquared])
+            fit_input_words.append(test_input)
+            fit_output_words.append(test_output)
+            seq2seq.train(fit_input_words, fit_output_words, False)
 
 
 
 if __name__ == "__main__":
     init()
-    print(translate("asjacobs", "backend", "office", ["University"], ["firewall", "vpn"], None, None, None, None, None))
+    feedback()
+    #print(translate("asjacobs", "backend", "office", ["University"], ["firewall", "vpn"], None, None, None, None, None))
