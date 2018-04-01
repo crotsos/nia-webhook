@@ -1,0 +1,100 @@
+@id @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value
+@id @location @target @target @middlebox @middlebox @hour @hour allow @traffic
+@id @location @target @target @middlebox @middlebox @hour @hour block @traffic
+@id @location @target @middlebox @qos_metric @qos_constraint block @traffic
+@id @target @target @qos_metric @qos_constraint @qos_value block @traffic
+@id @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value @hour @hour block @traffic
+@id @location @target @target @middlebox allow @traffic
+@id @location @location @qos_metric @qos_constraint @qos_value allow @traffic
+@id @location @location @target @target @hour @hour allow @traffic
+@id @target @qos_metric @qos_constraint @qos_value @hour @hour block @traffic
+@id @location @location @target @target @qos_metric @qos_constraint @hour @hour block @traffic
+@id @location @target @target @middlebox allow @traffic
+@id @location @middlebox @middlebox @qos_metric @qos_constraint @qos_value allow @traffic
+@id @location @location block @traffic
+@id @location @location @target @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @target @hour @hour allow @traffic
+@id @target @target @middlebox @qos_metric @qos_constraint @qos_value allow @traffic
+@id @location @location @qos_metric @qos_constraint @hour @hour block @traffic
+@id @location @location @target @target @middlebox @middlebox block @traffic
+@id @location @target @middlebox @middlebox @qos_metric @qos_constraint block @traffic
+@id @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value @hour @hour block @traffic
+@id @location @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value
+@id @middlebox @middlebox @qos_metric @qos_constraint @hour @hour block @traffic
+@id @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @target @qos_metric @qos_constraint @qos_value @hour @hour block @traffic
+@id @location @target @target @hour @hour allow @traffic
+@id @location @target @qos_metric @qos_constraint allow @traffic
+@id @target @qos_metric @qos_constraint allow @traffic
+@id @location @target @target @qos_metric @qos_constraint @qos_value allow @traffic
+@id @location @location @target @middlebox @middlebox allow @traffic
+@id @location @middlebox block @traffic
+@id @location @target @target allow @traffic
+@id @location @target @target @qos_metric @qos_constraint @qos_value @hour @hour allow @traffic
+@id @target @target @middlebox @middlebox @hour @hour block @traffic
+@id @location @target @qos_metric @qos_constraint block @traffic
+@id @location allow @traffic
+@id @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value
+@id @location @target @qos_metric @qos_constraint allow @traffic
+@id @target @middlebox @qos_metric @qos_constraint @hour @hour block @traffic
+@id @middlebox @middlebox @qos_metric @qos_constraint @qos_value @hour @hour allow @traffic
+@id @location allow @traffic
+@id @location @target @target @hour @hour allow @traffic
+@id @location @target @middlebox @middlebox @hour @hour allow @traffic
+@id @target @target @middlebox @qos_metric @qos_constraint @qos_value @hour @hour
+@id @location @location @target @target @qos_metric @qos_constraint @qos_value @hour @hour allow @traffic
+@id @location @location @middlebox @middlebox @hour @hour block @traffic
+@id @location @target @target @middlebox @middlebox @hour @hour block @traffic
+@id @location @location @target @target @qos_metric @qos_constraint @qos_value @hour @hour allow @traffic
+@id @location @target @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @target allow @traffic
+@id @location @hour @hour
+@id @location @location @middlebox @middlebox @qos_metric @qos_constraint @qos_value block @traffic
+@id @location @target @middlebox @qos_metric @qos_constraint @qos_value allow @traffic
+@id @target @qos_metric @qos_constraint @qos_value
+@id @location @location @target @target @middlebox allow @traffic
+@id @location @location @target @target @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @location @qos_metric @qos_constraint @qos_value @hour @hour allow @traffic
+@id @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @target @target @qos_metric @qos_constraint @qos_value
+@id @location @target @middlebox block @traffic
+@id @location @middlebox allow @traffic
+@id @location @location @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @location @target @middlebox @middlebox block @traffic
+@id @middlebox @middlebox allow @traffic
+@id @location @target @qos_metric @qos_constraint @hour @hour block @traffic
+@id @middlebox @middlebox @hour @hour allow @traffic
+@id @location @location @target @target @middlebox @hour @hour
+@id @location @middlebox @qos_metric @qos_constraint allow @traffic
+@id @location @target @qos_metric @qos_constraint @qos_value allow @traffic
+@id @location @location @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value @hour @hour block @traffic
+@id @location @qos_metric @qos_constraint @hour @hour block @traffic
+@id @middlebox @middlebox @qos_metric @qos_constraint @hour @hour
+@id @location @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value @hour @hour block @traffic
+@id @location @target @target @middlebox @middlebox allow @traffic
+@id @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value @hour @hour
+@id @location @location @target @target @middlebox @qos_metric @qos_constraint allow @traffic
+@id @location @location @target @middlebox @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value allow @traffic
+@id @target @middlebox block @traffic
+@id @location @target @target @middlebox @qos_metric @qos_constraint
+@id @target @target @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @target @target @middlebox @hour @hour allow @traffic
+@id @target @target @qos_metric @qos_constraint block @traffic
+@id @location @qos_metric @qos_constraint @qos_value @hour @hour allow @traffic
+@id @location @location @middlebox @middlebox @qos_metric @qos_constraint @qos_value allow @traffic
+@id @location @target @middlebox @middlebox @qos_metric @qos_constraint @hour @hour block @traffic
+@id @location @target @target @middlebox @hour @hour allow @traffic
+@id @location @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value @hour @hour allow @traffic
+@id @location @location @middlebox @middlebox @qos_metric @qos_constraint @hour @hour
+@id @location @target @qos_metric @qos_constraint allow @traffic
+@id @location @target @target @middlebox @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @target @qos_metric @qos_constraint @qos_value allow @traffic
+@id @location @target @target @middlebox @qos_metric @qos_constraint allow @traffic
+@id @target @middlebox @hour @hour block @traffic
+@id @location @target @middlebox @qos_metric @qos_constraint @qos_value @hour @hour allow @traffic
+@id @location @target @target @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @location @target @qos_metric @qos_constraint

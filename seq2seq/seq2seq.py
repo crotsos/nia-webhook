@@ -7,7 +7,7 @@ import model
 import config
 
 train = True
-test = False
+test = True
 
 seq2seq = None
 fit_input_words = []

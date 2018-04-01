@@ -1,7 +1,7 @@
 ############ DATASET ############
 DATASET_PATH = '../res/dataset_{}/{}_dataset.txt'
-FIT_DATASET_SIZE = 100
-TEST_DATASET_SIZE = 20
+FIT_DATASET_SIZE = 5000
+TEST_DATASET_SIZE = 1000
 FEEDBACK_DATASET_SIZE = 30
 DATASET_VOCAB_SIZE = 2000
 DATASET_FILTERS = '!$&*+-./;<=>?#[\\]^{|}~\t\n'
