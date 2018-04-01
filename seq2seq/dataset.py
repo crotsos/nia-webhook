@@ -89,9 +89,14 @@ def get_entities(id, origin, destination, targets, middleboxes, qos, start, end,
 
     return entities
 
-def write(type):
-    with open(config.DATASET_PATH.format(config.FIT_DATASET_SIZE, type), 'wb') as file:
-        dataset_size = config.FIT_DATASET_SIZE if type == 'fit' else config.TEST_DATASET_SIZE if type == 'test' else config.FEEDBACK_DATASET_SIZE 
+def write(dataset_type):
+    dataset_sizes = {
+        'fit': config.FIT_DATASET_SIZE,
+        'test': config.TEST_DATASET_SIZE,
+        'feedback':  config.FEEDBACK_DATASET_SIZE,
+    }
+    dataset_size = dataset_sizes[dataset_type]
+    with open(config.DATASET_PATH.format(config.FIT_DATASET_SIZE, dataset_type), 'wb') as file:
         for i in range(dataset_size):
             qos = []
             for metric in range(randint(0, 2)):
@@ -110,6 +115,41 @@ def write(type):
             intent = get_intent(id, origin, destination, target, mbs, qos, start, end, allow, block)
             file.write(entities + ' > ' + intent + '\n')
 
+
+def write_time():
+    entities_intent = {}
+    for metric_i in range(0,5):
+        for value in range(0,2):
+            qos = [{'name': '@qos_metric', 'constraint': '@qos_constraint', 'value': '@qos_value' if value == 0 else None} for i in range(metric_i)]
+            id = '@id'
+            for origin_i in range(0,2):
+                origin = '@location' if origin_i == 0 else None
+                for destination_i in range(0,2):
+                    destination = '@location' if destination_i == 0 else None
+                    for target_i in range(4):
+                        target = ['@target' for i in range(target_i)]
+                        for mb_i in range(6):
+                            mbs = ['@middlebox' for i in range(mb_i)]
+                            for start_i in range(0,2):
+                                start = '@hour' if start_i == 0 else None
+                                end = '@hour' if start else None
+                                for allow_i in range(0,2):
+                                    allow = '@traffic' if allow_i == 0 else None
+                                    for block_i in range(0,2):
+                                        block = '@traffic' if block_i == 0 else None
+                                        entities = get_entities(id, origin, destination, target, mbs, qos, start, end, allow, block)
+                                        intent = get_intent(id, origin, destination, target, mbs, qos, start, end, allow, block)
+                                        if len(entities.split(" ")) > 1:
+                                            entities_intent[len(entities.split(" "))] = (entities, intent)
+
+    with open(config.DATASET_PATH.format(config.FIT_DATASET_SIZE, "time"), 'wb') as file:
+        min_key = 1000
+        max_key = 0
+        for length, (entities, intent) in entities_intent.items():
+            min_key = length if min_key > length else min_key
+            max_key = length if max_key < length else max_key
+            file.write(entities + ' > ' + intent + '\n')
+        print("min {}, max {}".format(min_key, max_key))
 
 def read(type):
     lines = []
@@ -132,3 +172,4 @@ if __name__ == "__main__":
     write('fit')
     write('test')
     write('feedback')
+    write_time()

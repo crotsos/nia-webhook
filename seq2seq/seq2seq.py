@@ -1,5 +1,7 @@
 import numpy as np
 import csv
+import time
+
 
 import dataset
 import encoding
@@ -121,8 +123,27 @@ def feedback():
             seq2seq.train(fit_input_words, fit_output_words, False)
 
 
+def time_test():
+    global seq2seq
+    time_input_words, time_output_words = dataset.read('time')
+
+    with open("../res/dataset_{}/time_results.csv".format(config.FIT_DATASET_SIZE), "wb") as file:
+        writer = csv.writer(file, delimiter=",")
+        writer.writerow(['num', 'time'])
+
+        for time_input in time_input_words:
+            start = time.time()
+            print('entities', time_input)
+            intent, rsquared = seq2seq.predict(time_input)
+            end = time.time()
+            m_time = end - start
+            length = len(time_input)
+            print('intent: {}, length: {}, time: {}'.format(intent, length, m_time))
+            writer.writerow([length, m_time])
+
 
 if __name__ == "__main__":
     init()
-    feedback()
+    #feedback()
+    time_test()
     #print(translate("asjacobs", "backend", "office", ["University"], ["firewall", "vpn"], None, None, None, None, None))
