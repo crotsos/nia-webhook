@@ -77,7 +77,7 @@ class AttentionSeq2Seq:
                 output_sequences = encoding.vectorize(output_words[i:i_end], self.output_max_len, self.output_word_to_index)
 
                 print('[INFO] Training model: epoch {}th {}/{} samples'.format(k, i, len(input_words)))
-                self.model.fit(input_words[i:i_end], output_sequences, batch_size=config.MODEL_BATCH_SIZE, validation_split=config.MODEL_VALIDATION_SPLIT, epochs=1, verbose=2)
+                self.model.fit(input_words[i:i_end], output_sequences, batch_size=config.MODEL_BATCH_SIZE, validation_split=config.MODEL_VALIDATION_SPLIT, epochs=1, verbose=0)
             self.model.save_weights(config.MODEL_WEIGHTS_PATH.format(config.FIT_DATASET_SIZE, k))
 
     def test(self, input_words, output_words):

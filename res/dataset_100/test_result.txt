@@ -1,20 +1,20 @@
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") end hour("@hour") hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") end end end end hour("@hour") hour("@hour") hour("@hour")
-define intent @idintent: @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox"), middlebox("@middlebox") for client("@target") client("@target") end end end end hour("@hour") hour("@hour") hour("@hour")
-define intent @idintent: @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox"), middlebox("@middlebox") for client("@target") client("@target") end end end end hour("@hour") hour("@hour") hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") end end end hour("@hour") hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") endpoint("@location") middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") client("@target") end end
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") client("@target") client("@target") end end end hour("@hour") hour("@hour")
-intent @idintent: @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") end hour("@hour") hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") endpoint("@location") add middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") end end hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") client("@target") end end end hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") client("@target") end end end end hour("@hour") hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") end end end hour("@hour") hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") client("@target") client("@target") end end end hour("@hour") hour("@hour")
-define intent @idintent: @idintent: endpoint("@location") endpoint("@location") middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") end hour("@hour") hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") client("@target") end end hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") endpoint("@location") middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") end end end hour("@hour") hour("@hour")
-intent @idintent: @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") client("@target") end end hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") endpoint("@location") middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") hour("@hour")
-define define @idintent: @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox"), middlebox("@middlebox") middlebox("@middlebox") client("@target") client("@target") end end end end hour("@hour") hour("@hour")
-define intent @idintent: endpoint("@location") endpoint("@location") add middlebox("@middlebox") middlebox("@middlebox") middlebox("@middlebox") client("@target") end end end hour("@hour") hour("@hour")
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour")
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") to
+define define intent @idintent: middlebox("@middlebox") hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target") client("@target") with with
+define intent @idintent: @idintent: middlebox("@middlebox") hour("@hour") hour("@hour") hour("@hour")
+define intent @idintent: @idintent: middlebox("@middlebox") hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target") with with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") hour("@hour") to with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour")
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target") with with with with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target") with with with with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target") client("@target") with with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") hour("@hour")
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target") with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") to to with
+define define intent @idintent: middlebox("@middlebox") hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target") with with with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target")
+define intent @idintent: middlebox("@middlebox") hour("@hour") hour("@hour") hour("@hour") hour("@hour") to with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target") with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour")
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") with
+define intent @idintent: @idintent: hour("@hour") hour("@hour") hour("@hour") hour("@hour") hour("@hour") client("@target") with with with with
