@@ -95,13 +95,11 @@ def init():
         print(fit_input_words, fit_output_words)
 
     if test:
-        rsquared = seq2seq.test(test_input_words, test_output_words)
-        print("R-squared: {}".format(rsquared))
+        (rsquared_mean, confidence_bottom, confidence_top) = seq2seq.test(test_input_words, test_output_words)
+        print("R-squared: {}, {}, {}".format(rsquared_mean, confidence_bottom, confidence_top))
         with open("../res/dataset_results.csv", "a") as file:
             writer = csv.writer(file, delimiter=",")
-            writer.writerow([config.FIT_DATASET_SIZE, rsquared])
-
-
+            writer.writerow([config.FIT_DATASET_SIZE, rsquared_mean, confidence_bottom, confidence_top])
 
 
 def feedback():

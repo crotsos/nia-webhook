@@ -2,6 +2,7 @@ import os
 
 import numpy as np
 import scipy
+import scipy.stats
 
 import config
 import encoding
@@ -105,12 +106,13 @@ class AttentionSeq2Seq:
                 outputs.append(sequence)
                 print("expected: {}".format(output_sequence))
                 print("predicted: {}".format(prediction))
-                rsquared_list.append(np.corrcoef(output_sequence, prediction))
+                rsquared_list.append(rsquared(output_sequence, prediction))
 
             np.savetxt(config.MODEL_TEST_INPUT_PATH.format(config.FIT_DATASET_SIZE), inputs, fmt='%s')
             np.savetxt(config.MODEL_TEST_RESULT_PATH.format(config.FIT_DATASET_SIZE), outputs, fmt='%s')
 
-            return r2_score(output_words, predictions, multioutput='variance_weighted')
+
+            return mean_confidence_interval(rsquared_list)
 
     def predict(self, entities, expected_intent=None):
         intent = ''
@@ -144,6 +146,13 @@ class AttentionSeq2Seq:
             epoch = self.saved_weights[self.saved_weights.rfind('_') + 1:self.saved_weights.rfind('.')]
             self.model.load_weights(self.saved_weights)
         return int(epoch)
+
+def mean_confidence_interval(data, confidence=0.95):
+    a = 1.0*np.array(data)
+    n = len(a)
+    m, se = np.mean(a), scipy.stats.sem(a)
+    h = se * scipy.stats.t._ppf((1+confidence)/2., n-1)
+    return m, m-h, m+h
 
 def rsquared(x, y):
     slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)
