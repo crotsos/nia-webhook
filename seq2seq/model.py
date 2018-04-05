@@ -1,14 +1,13 @@
 import os
+import os.path
 
 import numpy as np
 import scipy
 import scipy.stats
+from sklearn.metrics import r2_score
 
 import config
 import encoding
-
-from sklearn.metrics import r2_score
-
 from keras.layers import (Activation, Dense, Embedding, RepeatVector,
                           TimeDistributed, recurrent)
 from keras.layers.recurrent import LSTM
@@ -27,7 +26,6 @@ class AttentionSeq2Seq:
         self.input_max_len = max([len(sentence) for sentence in input_words])
         self.output_vocab_len = encoding.get_vocab_size(output_words)
         self.output_max_len = max([len(sentence) for sentence in output_words])
-
 
         print('[INFO] Creating model...')
         self.model = Sequential()
@@ -49,7 +47,7 @@ class AttentionSeq2Seq:
         self.model.compile(loss=config.MODEL_LOSS, optimizer=config.MODEL_OPTIMIZER,  metrics=config.MODEL_METRICS)
 
     def train(self, input_words, output_words, index=True):
-        k_start = self.load();
+        k_start = self.load()
 
         if index:
             input_words = encoding.index(input_words, self.input_word_to_index)
@@ -61,7 +59,7 @@ class AttentionSeq2Seq:
 
         print('[INFO] Training... starting epoch: {}'.format(k_start))
         i_end = 0
-        for k in range(k_start, config.MODEL_EPOCHS + 1):
+        for k in range(k_start, config.MODEL_EPOCHS):
             # Shuffling the training data every epoch to avoid local minima
             indices = np.arange(len(input_words))
             np.random.shuffle(indices)
@@ -77,11 +75,14 @@ class AttentionSeq2Seq:
                 output_sequences = encoding.vectorize(output_words[i:i_end], self.output_max_len, self.output_word_to_index)
 
                 print('[INFO] Training model: epoch {}th {}/{} samples'.format(k, i, len(input_words)))
-                self.model.fit(input_words[i:i_end], output_sequences, batch_size=config.MODEL_BATCH_SIZE, validation_split=config.MODEL_VALIDATION_SPLIT, epochs=1, verbose=0)
-            self.model.save_weights(config.MODEL_WEIGHTS_PATH.format(config.FIT_DATASET_SIZE, k))
+                self.model.fit(input_words[i:i_end], output_sequences, batch_size=config.MODEL_BATCH_SIZE, validation_split=config.MODEL_VALIDATION_SPLIT, epochs=1, verbose=2)
+
+            if not os.path.isfile(config.MODEL_WEIGHTS_PATH.format(config.FIT_DATASET_SIZE, k)):
+                print('Saving weights for epoch {}'.format(k))
+                self.model.save_weights(config.MODEL_WEIGHTS_PATH.format(config.FIT_DATASET_SIZE, k))
 
     def test(self, input_words, output_words):
-        self.load();
+        self.load()
 
         if len(self.saved_weights) == 0:
             print("The network hasn't been trained! Program will exit...")
@@ -111,13 +112,12 @@ class AttentionSeq2Seq:
             np.savetxt(config.MODEL_TEST_INPUT_PATH.format(config.FIT_DATASET_SIZE), inputs, fmt='%s')
             np.savetxt(config.MODEL_TEST_RESULT_PATH.format(config.FIT_DATASET_SIZE), outputs, fmt='%s')
 
-
             return mean_confidence_interval(rsquared_list)
 
     def predict(self, entities, expected_intent=None):
         intent = ''
         r2_score = 0
-        self.load();
+        self.load()
 
         if len(self.saved_weights) == 0:
             print("The network hasn't been trained! Program will exit...")
@@ -147,16 +147,19 @@ class AttentionSeq2Seq:
             self.model.load_weights(self.saved_weights)
         return int(epoch)
 
+
 def mean_confidence_interval(data, confidence=0.95):
-    a = 1.0*np.array(data)
+    a = 1.0 * np.array(data)
     n = len(a)
     m, se = np.mean(a), scipy.stats.sem(a)
-    h = se * scipy.stats.t._ppf((1+confidence)/2., n-1)
-    return m, m-h, m+h
+    h = se * scipy.stats.t._ppf((1 + confidence) / 2., n - 1)
+    return m, m - h, m + h
+
 
 def rsquared(x, y):
     slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)
     return r_value**2
+
 
 def find_checkpoint_file():
     checkpoint_file = [config.MODEL_DIR.format(config.FIT_DATASET_SIZE) + f for f in os.listdir(config.MODEL_DIR.format(config.FIT_DATASET_SIZE)) if 'weights' in f]

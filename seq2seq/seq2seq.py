@@ -1,13 +1,14 @@
-import numpy as np
 import csv
 
+import numpy as np
+
+import config
 import dataset
 import encoding
 import model
-import config
 
 train = True
-test = True
+test = False
 
 seq2seq = None
 fit_input_words = []
@@ -37,8 +38,8 @@ def deanonymize(intent, id, origin, destination, targets, middleboxes, qos, star
     intent = intent.replace('@hour', start) if start is not None else intent
     intent = intent.replace('@hour', end) if end is not None else intent
 
-    intent = intent.replace('@traffic', end) if allow is not None else intent
-    intent = intent.replace('@traffic', end) if block is not None else intent
+    intent = intent.replace('@traffic', allow) if allow is not None else intent
+    intent = intent.replace('@traffic', block) if block is not None else intent
 
     return intent
 
@@ -92,12 +93,11 @@ def init():
     if train:
         seq2seq.train(fit_input_words, fit_output_words)
         train = False
-        print(fit_input_words, fit_output_words)
 
     if test:
         (rsquared_mean, confidence_bottom, confidence_top) = seq2seq.test(test_input_words, test_output_words)
         print("R-squared: {}, {}, {}".format(rsquared_mean, confidence_bottom, confidence_top))
-        with open("../res/dataset_results.csv", "a") as file:
+        with open(config.RESULTS_PATH, "a") as file:
             writer = csv.writer(file, delimiter=",")
             writer.writerow([config.FIT_DATASET_SIZE, rsquared_mean, confidence_bottom, confidence_top])
 
@@ -106,13 +106,11 @@ def feedback():
     global seq2seq, fit_input_words, fit_output_words
     test_input_words, test_output_words = dataset.read('feedback')
 
-
-    with open("../res/dataset_{}/feedback_results.csv".format(config.FIT_DATASET_SIZE), "wb") as file:
+    with open(config.FEEDBACK_PATH.format(config.FIT_DATASET_SIZE), "wb") as file:
         writer = csv.writer(file, delimiter=",")
         writer.writerow(['id', 'rsquared'])
 
         for index, (test_input, test_output) in enumerate(zip(test_input_words, test_output_words)):
-            print('entities', test_input)
             intent, rsquared = seq2seq.predict(test_input, test_output)
             print('intent: {}, rsquared: {}'.format(test_output, rsquared))
             writer.writerow([index, rsquared])
@@ -121,8 +119,7 @@ def feedback():
             seq2seq.train(fit_input_words, fit_output_words, False)
 
 
-
 if __name__ == "__main__":
     init()
     feedback()
-    #print(translate("asjacobs", "backend", "office", ["University"], ["firewall", "vpn"], None, None, None, None, None))
+    print(translate("asjacobs", "backend", "office", ["University"], ["firewall", "vpn"], None, None, None, None, None))
