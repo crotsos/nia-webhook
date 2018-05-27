@@ -3,18 +3,19 @@ from random import randint, sample
 import config
 from keras.preprocessing.text import text_to_word_sequence
 
+
 def get_intent(id, origin, destination, targets, middleboxes, qos, start, end, allow, block):
     intent = 'define intent ' + id + 'Intent:'
     if origin:
-        intent = intent + ' from endpoint("' + origin + '")'
+        intent = intent + ' from endpoint(\'' + origin + '\')'
     if destination:
-        intent = intent + ' to endpoint("' + destination + '")'
+        intent = intent + ' to endpoint(\'' + destination + '\')'
 
     for index, target in enumerate(targets):
         if target:
             if 'for' not in intent:
                 intent = intent + ' for '
-            intent = intent + 'client("' + target + '")'
+            intent = intent + 'client(\'' + target + '\')'
 
             if index != (len(targets) - 1):
                 intent = intent + ', '
@@ -23,7 +24,7 @@ def get_intent(id, origin, destination, targets, middleboxes, qos, start, end, a
         if mb:
             if 'add' not in intent:
                 intent = intent + ' add '
-            intent = intent + 'middlebox("' + mb + '")'
+            intent = intent + 'middlebox(\'' + mb + '\')'
 
             if index != (len(middleboxes) - 1):
                 intent = intent + ', '
@@ -33,25 +34,26 @@ def get_intent(id, origin, destination, targets, middleboxes, qos, start, end, a
             if 'with' not in intent:
                 intent = intent + ' with '
 
-            intent = intent + metric['name'] + '("' + metric['constraint']
-            intent = intent + '","' + metric['value'] + '")' if metric['value'] else intent + '")'
+            intent = intent + metric['name'] + '(\'' + metric['constraint']
+            intent = intent + '\',\'' + metric['value'] + '\')' if metric['value'] else intent + '\')'
 
             if index != (len(qos) - 1):
                 intent = intent + ', '
 
     if start:
-        intent = intent + ' start hour("' + start + '")'
+        intent = intent + ' start hour(\'' + start + '\')'
     if end:
-        intent = intent + ' end hour("' + end + '")'
+        intent = intent + ' end hour(\'' + end + '\')'
 
     if allow:
         if allow not in intent:
-            intent = intent + ' allow trafic("' + allow + '")'
+            intent = intent + ' allow traffic(\'' + allow + '\')'
     if block:
         if block not in intent:
-            intent = intent + ' block trafic("' + block + '")'
+            intent = intent + ' block traffic(\'' + block + '\')'
 
     return intent
+
 
 def get_entities(id, origin, destination, targets, middleboxes, qos, start, end, allow, block):
     entities = id
@@ -167,6 +169,7 @@ def read(type):
             output_words.append(text_to_word_sequence(output_text, filters=config.DATASET_FILTERS))
 
     return input_words, output_words
+
 
 if __name__ == "__main__":
     write('fit')

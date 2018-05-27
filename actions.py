@@ -1,10 +1,10 @@
-import seq2seq
+from seq2seq import *
 
 seq2seq.init()
 
 
 def get_params(req):
-    username = req.get("id")
+    id = req.get("id")
     result = req.get("result")
     parameters = result.get("parameters")
 
@@ -12,26 +12,25 @@ def get_params(req):
     destination = parameters.get("destination")
     targets = parameters.get("target")
     middleboxes = parameters.get("middlebox")
+    qos = None
     start = parameters.get("start")
     end = parameters.get("end")
     allow = parameters.get("allow")
     block = parameters.get("block")
 
-    return username, origin, destination, targets, middleboxes, start, end, allow, block
+    return id, origin, destination, targets, middleboxes, qos, start, end, allow, block
 
 
-def build_nip(req):
-    print("args", middleboxes, targets)
+def build_nile_intent(req):
+    id, origin, destination, targets, middleboxes, qos, start, end, allow, block = get_params(req)
 
-    username, origin, destination, targets, middleboxes, start, end, allow, block = get_params(req)
-
-    intent = seq2seq.translate(username, origin, destination, targets, middleboxes, start, end, allow, block)
-    speech = "Is this what you want? " + nip
+    intent = seq2seq.translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
+    speech = "Is this what you want? "
     print("Response:", speech)
 
     return {
         "speech": speech,
-        "displayText": speech,
+        "displayText": speech + intent,
         # "data": data,
         # "contextOut": [],
         "source": "nia"
@@ -39,5 +38,5 @@ def build_nip(req):
 
 
 actions = {
-    "input.waypoint": build_waypoint_nip
+    "input.nile": build_nile_intent
 }
