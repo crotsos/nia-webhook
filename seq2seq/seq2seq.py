@@ -1,7 +1,6 @@
 import csv
 import time
 
-
 import dataset
 import encoding
 import model
@@ -139,5 +138,5 @@ def time_test():
 
 if __name__ == "__main__":
     init()
-    feedback()
-    print(translate("asjacobs", "backend", "office", ["University"], ["firewall", "vpn"], None, None, None, None, None))
+    # feedback()
+    print(translate("asjacobs", "client", "server", None, ["firewall", "ids"], None, None, None, None, None))

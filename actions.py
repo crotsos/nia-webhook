@@ -31,7 +31,7 @@ def build_nile_intent(req):
     return {
         "speech": speech,
         "displayText": speech + intent,
-        # "data": data,
+        "data": intent,
         # "contextOut": [],
         "source": "nia"
     }
