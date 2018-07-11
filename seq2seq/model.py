@@ -1,13 +1,11 @@
 import os
 import os.path
 
+import config
+import encoding
 import numpy as np
 import scipy
 import scipy.stats
-from sklearn.metrics import r2_score
-
-import config
-import encoding
 from keras.layers import (Activation, Dense, Embedding, RepeatVector,
                           TimeDistributed, recurrent)
 from keras.layers.recurrent import LSTM
@@ -15,6 +13,7 @@ from keras.models import Sequential
 from keras.optimizers import Adam, RMSprop
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import text_to_word_sequence
+from sklearn.metrics import r2_score
 
 
 class AttentionSeq2Seq:

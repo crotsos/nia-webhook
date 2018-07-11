@@ -24,10 +24,12 @@ def webhook():
 
     print("Request: {}".format(json.dumps(req, indent=4)))
     try:
-        res = actions[req.get("result").get("action")](req)
+        res = actions[req.get("queryResult").get("action")](req)
     except Exception as err:
-        print(err)
-        res = {"message": "Action not mapped in webhook."}
+        res = {
+            "message": "Action not mapped in webhook.",
+            "error": str(err)
+        }
     res = json.dumps(res, indent=4)
     print("Response: {}".format(json.dumps(res, indent=4)))
 

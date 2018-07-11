@@ -1,12 +1,13 @@
 import csv
 import time
 
+import config
 import dataset
 import encoding
 import model
 
-train = True
-test = False
+train = False
+test = True
 
 seq2seq = None
 fit_input_words = []
@@ -20,11 +21,11 @@ def deanonymize(intent, id, origin, destination, targets, middleboxes, qos, star
 
     if targets is not None:
         for target in targets:
-            intent = intent.replace('@target', target, 1)
+            intent = intent.replace('@target', target.strip(), 1)
 
     if middleboxes is not None:
         for mb in middleboxes:
-            intent = intent.replace('@middlebox', mb, 1)
+            intent = intent.replace('@middlebox', mb.strip(), 1)
 
     if qos is not None:
         for metric in qos:
@@ -44,8 +45,8 @@ def deanonymize(intent, id, origin, destination, targets, middleboxes, qos, star
 
 def anonymize(id, origin, destination, targets, middleboxes, qos, start, end, allow, block):
     entities = '@id '
-    entities += '@location ' if origin is not None else ''
-    entities += '@location ' if destination is not None else ''
+    entities += '@location ' if origin is not None and origin else ''
+    entities += '@location ' if destination is not None and destination else ''
 
     if targets is not None:
         for target in targets:
@@ -61,8 +62,8 @@ def anonymize(id, origin, destination, targets, middleboxes, qos, start, end, al
             if metric['value']:
                 entities += '@qos_value'
 
-    entities += '@hour ' if start is not None else ''
-    entities += '@hour ' if end is not None else ''
+    entities += '@hour ' if start is not None and start else ''
+    entities += '@hour ' if end is not None and end else ''
 
     entities += 'allow @traffic ' if allow is not None else ''
     entities += 'block @traffic ' if block is not None else ''
