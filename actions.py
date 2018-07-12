@@ -40,14 +40,60 @@ def build_nile_intent(req):
 
     intent = seq2seq.translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
     speech = "Is this what you want? "
-    print("Response:", speech)
+    print("Response:", speech + intent)
 
     return {
-        "speech": speech,
-        "displayText": speech + intent,
-        "data": intent,
-        # "contextOut": [],
-        "source": "nia"
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+            {
+                "card": {
+                    "title": speech,
+                    "subtitle": intent,
+                    "imageUri": "https://assistant.google.com/static/images/molecule/Molecule-Formation-stop.png",
+                    "buttons": [
+                        {
+                            "text": "Yes! :)",
+                            "postback": "https://assistant.google.com/"
+                        },
+                        {
+                            "text": "No! :(",
+                            "postback": "https://assistant.google.com/"
+                        }
+                    ]
+                }
+            }
+        ],
+        "source": "nia-proxy.herokuapp.com",
+        "payload": {
+            "google": {
+                "expectUserResponse": True,
+                "richResponse": {
+                    "items": [
+                        {
+                            "simpleResponse": {
+                                "textToSpeech": speech
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "outputContexts": [
+            {
+                "name": "projects/${PROJECT_ID}/agent/sessions/${SESSION_ID}/contexts/context name",
+                "lifespanCount": 5,
+                "parameters": {
+                    "intent": intent
+                }
+            }
+        ],
+        "followupEventInput": {
+            "name": "cofirmation",
+            "languageCode": "en-US",
+            "parameters": {
+                "intent": intent
+            }
+        }
     }
 
 
