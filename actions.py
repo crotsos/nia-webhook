@@ -43,27 +43,6 @@ def build_nile_intent(req):
     print("Response:", speech + intent)
 
     return {
-        "fulfillmentText": speech,
-        "fulfillmentMessages": [
-            {
-                "card": {
-                    "title": speech,
-                    "subtitle": intent,
-                    "imageUri": "https://assistant.google.com/static/images/molecule/Molecule-Formation-stop.png",
-                    "buttons": [
-                        {
-                            "text": "Yes! :)",
-                            "postback": "https://assistant.google.com/"
-                        },
-                        {
-                            "text": "No! :(",
-                            "postback": "https://assistant.google.com/"
-                        }
-                    ]
-                }
-            }
-        ],
-        "source": "nia-proxy.herokuapp.com",
         "payload": {
             "google": {
                 "expectUserResponse": True,
@@ -73,25 +52,33 @@ def build_nile_intent(req):
                             "simpleResponse": {
                                 "textToSpeech": speech
                             }
+                        },
+                        {
+                            "basicCard": {
+                                "title": speech,
+                                "image": {
+                                    "url": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+                                    "accessibilityText": "Google Logo"
+                                },
+                                "buttons": [
+                                    {
+                                        "title": "Yes! :)",
+                                        "openUrlAction": {
+                                            "url": "https://www.google.com"
+                                        }
+                                    },
+                                    {
+                                        "title": "No! :(",
+                                        "openUrlAction": {
+                                            "url": "https://www.google.com"
+                                        }
+                                    }
+                                ],
+                                "imageDisplayOptions": "WHITE"
+                            }
                         }
                     ]
                 }
-            }
-        },
-        "outputContexts": [
-            {
-                "name": "projects/${PROJECT_ID}/agent/sessions/${SESSION_ID}/contexts/context name",
-                "lifespanCount": 5,
-                "parameters": {
-                    "intent": intent
-                }
-            }
-        ],
-        "followupEventInput": {
-            "name": "cofirmation",
-            "languageCode": "en-US",
-            "parameters": {
-                "intent": intent
             }
         }
     }
