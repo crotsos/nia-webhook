@@ -2,6 +2,7 @@ import os
 import sys
 
 ROOT_PATH = os.path.dirname(sys.modules['__main__'].__file__)
+NILE_OPERATIONS = ['add', 'from', 'to', 'with', 'allow', 'block', 'start', 'end', 'for', 'set']
 
 ############ DATASET ############
 DATASET_PATH = os.path.join(ROOT_PATH, 'res/dataset_{}/{}_dataset.txt')
