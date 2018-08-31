@@ -31,16 +31,14 @@ def webhook():
     entity = {
         "name": "projects/" + PROJECT_ID + "/agent/entityTypes/example",
         "displayName": "example",
-        "kind": 'KIND_MAP',
+        "kind": "KIND_MAP",
         "autoExpansionMode": "AUTO_EXPANSION_MODE_DEFAULT",
         "entities": [
             {
-                {
-                    "value": "example",
-                    "synonyms": [
-                        "examples", "ex.:", "e.g."
-                    ]
-                }
+                "value": "example",
+                "synonyms": [
+                    "examples", "ex.:", "e.g."
+                ]
             }
         ]
     }
