@@ -3,9 +3,15 @@ from __future__ import print_function
 import json
 import os
 
+import requests
+
 from actions import *
 from flask import Flask, make_response, request
 from future.standard_library import install_aliases
+
+PROJECT_ID = "nira-68681"
+PROJECT_API_BASE = "https://dialogflow.googleapis.com/v2/projects/" + PROJECT_ID + "/agent/"
+HEADERS = {"Authorization": "Bearer $(gcloud auth application-default print-access-token)"}
 
 install_aliases()
 
@@ -21,6 +27,24 @@ def home():
 @app.route("/webhook", methods=["POST"])
 def webhook():
     req = request.get_json(silent=True, force=True)
+
+    entity = {
+        "name": "projects/" + PROJECT_ID + "/agent/entityTypes/example",
+        "displayName": "example",
+        "kind": 'KIND_MAP',
+        "autoExpansionMode": "AUTO_EXPANSION_MODE_DEFAULT",
+        "entities": [
+            {
+                {
+                    "value": "example",
+                    "synonyms": [
+                        "examples", "ex.:", "e.g."
+                    ]
+                }
+            }
+        ]
+    }
+    r = requests.post(PROJECT_API_BASE + '/entityTypes', data=json.dumps(entity), headers=HEADERS)
 
     print("Request: {}".format(json.dumps(req, indent=4)))
     try:
