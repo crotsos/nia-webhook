@@ -15,7 +15,7 @@ fit_output_words = []
 
 
 def deanonymize(intent, id, origin, destination, targets, middleboxes, qos, start, end, allow, block):
-    intent = intent.replace('@id', id)
+    intent = intent.replace('@id', id, 1)
     intent = intent.replace('@location', origin, 1) if origin is not None else intent
     intent = intent.replace('@location', destination, 1) if destination is not None else intent
 
@@ -34,11 +34,11 @@ def deanonymize(intent, id, origin, destination, targets, middleboxes, qos, star
             if metric['value']:
                 intent = intent.replace('@qos_value', metric['value'], 1)
 
-    intent = intent.replace('@hour', start) if start is not None else intent
-    intent = intent.replace('@hour', end) if end is not None else intent
+    intent = intent.replace('@hour', start, 1) if start is not None else intent
+    intent = intent.replace('@hour', end, 1) if end is not None else intent
 
-    intent = intent.replace('@traffic', allow) if allow is not None else intent
-    intent = intent.replace('@traffic', block) if block is not None else intent
+    intent = intent.replace('@traffic', allow, 1) if allow is not None else intent
+    intent = intent.replace('@traffic', block, 1) if block is not None else intent
 
     return intent
 

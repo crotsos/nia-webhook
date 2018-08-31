@@ -4,8 +4,8 @@ seq2seq.init()
 
 
 def get_params(req):
-    id = req.get("responseId")
     result = req.get("queryResult")
+    id = result.get("intent").get("displayName")
     parameters = result.get("parameters")
 
     origin = parameters.get("origin")
@@ -19,7 +19,23 @@ def get_params(req):
     targets = parameters.get("target")
     middleboxes = parameters.get("middlebox")
 
-    qos = None
+    qos = []
+    qos_metrics = parameters.get("qos_metric")
+    qos_value_unit = parameters.get("qos_value_unit")
+    for idx, q in enumerate(qos_metrics):
+        metric = {}
+        metric['name'] = q
+        metric['constraint'] = 'max'
+        print qos_value_unit
+        print(idx, q)
+        if qos_value_unit:
+            print qos_value_unit[idx]
+            if isinstance(qos_value_unit[idx], basestring):
+                metric['value'] = qos_value_unit[idx]
+            else:
+                metric['value'] = str(qos_value_unit[idx]["qos_value"]["number-integer"]) + qos_value_unit[idx]["qos_unit"]
+            qos.append(metric)
+    print qos
 
     start = parameters.get("start")
     if isinstance(start, dict):
@@ -39,10 +55,23 @@ def build_nile_intent(req):
     id, origin, destination, targets, middleboxes, qos, start, end, allow, block = get_params(req)
 
     intent = seq2seq.translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
-    speech = "Is this what you want? "
-    print("Response:", speech + intent)
+    if intent[-1:] == ',':
+        intent = intent[:-1]
+    for op in config.NILE_OPERATIONS:
+        intent = intent.replace(op + " ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**" + op + "** ")
+
+    speech = "Is this what you want?"
+    print("Response:", speech + " " + intent)
 
     return {
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+            {
+                "text": {
+                    "text": [speech + " " + intent]
+                }
+            }
+        ],
         "payload": {
             "google": {
                 "expectUserResponse": True,
@@ -55,26 +84,57 @@ def build_nile_intent(req):
                         },
                         {
                             "basicCard": {
-                                "title": speech,
-                                "image": {
-                                    "url": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-                                    "accessibilityText": "Google Logo"
-                                },
-                                "buttons": [
-                                    {
-                                        "title": "Yes! :)",
-                                        "openUrlAction": {
-                                            "url": "https://www.google.com"
-                                        }
-                                    },
-                                    {
-                                        "title": "No! :(",
-                                        "openUrlAction": {
-                                            "url": "https://www.google.com"
-                                        }
-                                    }
-                                ],
-                                "imageDisplayOptions": "WHITE"
+                                "title": "Here is your intent.",
+                                "formattedText": intent
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "outputContexts": [
+            {
+                "name": "projects/nira-68681/agent/sessions/eeeadd4f-8905-fed6-7919-b28ee616bd51/contexts/build-followup",
+                "lifespanCount": 5,
+                "parameters": {
+                    "intent": intent
+                }
+            }
+        ]
+    }
+
+
+def build_accepted(req):
+    print("accepted", req)
+    return {
+        "payload": {
+            "google": {
+                "expectUserResponse": False,
+                "richResponse": {
+                    "items": [
+                        {
+                            "simpleResponse": {
+                                "textToSpeech": "Okay! Intent compiled and deployed!"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+
+
+def build_feedback(req):
+    print("denied", req)
+    return {
+        "payload": {
+            "google": {
+                "expectUserResponse": False,
+                "richResponse": {
+                    "items": [
+                        {
+                            "simpleResponse": {
+                                "textToSpeech": "Okay! Intent compiled and deployed!"
                             }
                         }
                     ]
@@ -85,5 +145,7 @@ def build_nile_intent(req):
 
 
 actions = {
-    "input.nile": build_nile_intent
+    "build.nile": build_nile_intent,
+    "build.build-yes": build_accepted,
+    "build.build-no": build_feedback
 }
