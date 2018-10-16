@@ -1,20 +1,9 @@
-import interpreter
-
-<< << << < HEAD
-
-
-def get_params(req):
-
-
-== == == =
+from interpreter import *
 
 
 def get_intent_params(req):
-
-
->>>>>> > 1bb571585061058bd54bcd69c3f5a28590c074fd
-  result = req.get("queryResult")
-   id = result.get("intent").get("displayName")
+    result = req.get("queryResult")
+    id = result.get("intent").get("displayName")
     parameters = result.get("parameters")
 
     origin = parameters.get("origin")
@@ -35,16 +24,16 @@ def get_intent_params(req):
         metric = {}
         metric['name'] = q
         metric['constraint'] = 'max'
-        print qos_value_unit
+        print(qos_value_unit)
         print(idx, q)
         if qos_value_unit:
-            print qos_value_unit[idx]
+            print(qos_value_unit[idx])
             if isinstance(qos_value_unit[idx], basestring):
                 metric['value'] = qos_value_unit[idx]
             else:
                 metric['value'] = str(qos_value_unit[idx]["qos_value"]["number-integer"]) + qos_value_unit[idx]["qos_unit"]
             qos.append(metric)
-    print qos
+    print(qos)
 
     start = parameters.get("start")
     if isinstance(start, dict):
@@ -74,33 +63,19 @@ def get_feedback_params(req):
 def build_nile_intent(req):
     id, origin, destination, targets, middleboxes, qos, start, end, allow, block = get_intent_params(req)
 
-    intent = interpreter.translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
+    intent = translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
     for op in config.NILE_OPERATIONS:
         intent = intent.replace(op + " ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**" + op + "** ")
 
-
-<< << << < HEAD
-  intent = seq2seq.translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
-   if intent[-1:] == ',':
-        intent = intent[:-1]
-    for op in config.NILE_OPERATIONS:
-        intent = intent.replace(op + " ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**" + op + "** ")
-
-== == ===
->>>>>> > 1bb571585061058bd54bcd69c3f5a28590c074fd
-  speech = "Is this what you want?"
-   print("Response:", speech + " " + intent)
+    speech = "Is this what you want?"
+    print("Response:", speech + " " + intent)
 
     return {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
             {
                 "text": {
-                    << <<<<< HEAD
                     "text": [speech + " " + intent]
-== == ===
-                    "text": speech + " " + intent
->> >>>> > 1bb571585061058bd54bcd69c3f5a28590c074fd
                 }
             }
         ],
