@@ -1,0 +1,20 @@
+@id @qos_metric @qos_constraint @qos_value block @traffic
+@id @location @qos_metric @qos_constraint @qos_value block @traffic
+@id @location @target @middlebox @qos_metric @qos_constraint @hour @hour allow @traffic
+@id @location @middlebox @hour @hour
+@id @target @target @qos_metric @qos_constraint @qos_value @hour @hour allow @traffic
+@id @location @target @middlebox @qos_metric @qos_constraint block @traffic
+@id @location @qos_metric @qos_constraint allow @traffic
+@id @location @target @middlebox @middlebox @qos_metric @qos_constraint @qos_value @hour @hour block @traffic
+@id @location @target @target @middlebox @middlebox @hour @hour allow @traffic
+@id @location @target @target @middlebox @hour @hour allow @traffic
+@id @location @location @target @hour @hour
+@id @location @target @target @qos_metric @qos_constraint @hour @hour
+@id @location @target @middlebox @middlebox allow @traffic
+@id @location @location @middlebox @middlebox @hour @hour allow @traffic
+@id @location @middlebox @qos_metric @qos_constraint @qos_value @hour @hour
+@id @target @middlebox @middlebox @qos_metric @qos_constraint allow @traffic
+@id @location @middlebox @middlebox @qos_metric @qos_constraint @qos_value @hour @hour
+@id @middlebox @middlebox @qos_metric @qos_constraint allow @traffic
+@id @location @middlebox @middlebox block @traffic
+@id @location @location @target @middlebox @middlebox @qos_metric @qos_constraint block @traffic

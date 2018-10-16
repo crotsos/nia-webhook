@@ -1,7 +1,12 @@
 import interpreter
 
 
+<<<<<<< HEAD
+
+def get_params(req):
+=======
 def get_intent_params(req):
+>>>>>>> 1bb571585061058bd54bcd69c3f5a28590c074fd
     result = req.get("queryResult")
     id = result.get("intent").get("displayName")
     parameters = result.get("parameters")
@@ -17,7 +22,23 @@ def get_intent_params(req):
     targets = parameters.get("target")
     middleboxes = parameters.get("middlebox")
 
-    qos = None
+    qos = []
+    qos_metrics = parameters.get("qos_metric")
+    qos_value_unit = parameters.get("qos_value_unit")
+    for idx, q in enumerate(qos_metrics):
+        metric = {}
+        metric['name'] = q
+        metric['constraint'] = 'max'
+        print qos_value_unit
+        print(idx, q)
+        if qos_value_unit:
+            print qos_value_unit[idx]
+            if isinstance(qos_value_unit[idx], basestring):
+                metric['value'] = qos_value_unit[idx]
+            else:
+                metric['value'] = str(qos_value_unit[idx]["qos_value"]["number-integer"]) + qos_value_unit[idx]["qos_unit"]
+            qos.append(metric)
+    print qos
 
     start = parameters.get("start")
     if isinstance(start, dict):
@@ -51,6 +72,15 @@ def build_nile_intent(req):
     for op in config.NILE_OPERATIONS:
         intent = intent.replace(op + " ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**" + op + "** ")
 
+<<<<<<< HEAD
+    intent = seq2seq.translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
+    if intent[-1:] == ',':
+        intent = intent[:-1]
+    for op in config.NILE_OPERATIONS:
+        intent = intent.replace(op + " ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**" + op + "** ")
+
+=======
+>>>>>>> 1bb571585061058bd54bcd69c3f5a28590c074fd
     speech = "Is this what you want?"
     print("Response:", speech + " " + intent)
 
@@ -59,7 +89,11 @@ def build_nile_intent(req):
         "fulfillmentMessages": [
             {
                 "text": {
+<<<<<<< HEAD
+                    "text": [speech + " " + intent]
+=======
                     "text": speech + " " + intent
+>>>>>>> 1bb571585061058bd54bcd69c3f5a28590c074fd
                 }
             }
         ],
@@ -116,9 +150,13 @@ def build_accepted(req):
 
 
 def build_feedback(req):
+<<<<<<< HEAD
+    print("denied", req)
+=======
     print("feedback", req)
     original_intent, entity, value = get_feedback_params(req)
     print("feedback", original_intent, entity, value)
+>>>>>>> 1bb571585061058bd54bcd69c3f5a28590c074fd
     return {
         "payload": {
             "google": {
@@ -127,7 +165,11 @@ def build_feedback(req):
                     "items": [
                         {
                             "simpleResponse": {
+<<<<<<< HEAD
+                                "textToSpeech": "Okay! Intent compiled and deployed!"
+=======
                                 "textToSpeech": "Hmm, can you tell me what information I missed then?"
+>>>>>>> 1bb571585061058bd54bcd69c3f5a28590c074fd
                             }
                         }
                     ]
