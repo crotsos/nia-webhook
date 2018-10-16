@@ -1,9 +1,7 @@
-from seq2seq import *
-
-seq2seq.init()
+import interpreter
 
 
-def get_params(req):
+def get_intent_params(req):
     result = req.get("queryResult")
     id = result.get("intent").get("displayName")
     parameters = result.get("parameters")
@@ -35,10 +33,21 @@ def get_params(req):
     return id, origin, destination, targets, middleboxes, qos, start, end, allow, block
 
 
-def build_nile_intent(req):
-    id, origin, destination, targets, middleboxes, qos, start, end, allow, block = get_params(req)
+def get_feedback_params(req):
+    result = req.get("queryResult")
+    parameters = result.get("parameters")
 
-    intent = seq2seq.translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
+    original_intent = ""
+    entity = parameters.get("entity")
+    value = parameters.get("value")
+
+    return original_intent, entity, value
+
+
+def build_nile_intent(req):
+    id, origin, destination, targets, middleboxes, qos, start, end, allow, block = get_intent_params(req)
+
+    intent = interpreter.translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
     for op in config.NILE_OPERATIONS:
         intent = intent.replace(op + " ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**" + op + "** ")
 
@@ -107,7 +116,9 @@ def build_accepted(req):
 
 
 def build_feedback(req):
-    print("denied", req)
+    print("feedback", req)
+    original_intent, entity, value = get_feedback_params(req)
+    print("feedback", original_intent, entity, value)
     return {
         "payload": {
             "google": {
@@ -116,7 +127,7 @@ def build_feedback(req):
                     "items": [
                         {
                             "simpleResponse": {
-                                "textToSpeech": "Okay! Intent compiled and deployed!"
+                                "textToSpeech": "Hmm, can you tell me what information I missed then?"
                             }
                         }
                     ]
