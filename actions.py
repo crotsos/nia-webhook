@@ -1,71 +1,18 @@
-from interpreter import *
+""" Network Wizard Webhook actions """
+
+import parser
+
+import config
+import interpreter
 
 
-def get_intent_params(req):
-    result = req.get("queryResult")
-    id = result.get("intent").get("displayName")
-    parameters = result.get("parameters")
+def build_nile_intent(request):
+    """ Webhook action to build Nile intent from Dialogflow request """
+    entities = parser.parse_intent(request)
 
-    origin = parameters.get("origin")
-    if isinstance(origin, dict):
-        origin = next(iter(parameters.get("origin").values()), '').strip()
-
-    destination = parameters.get("destination")
-    if isinstance(destination, dict):
-        destination = next(iter(parameters.get("destination").values()), '').strip()
-
-    targets = parameters.get("target")
-    middleboxes = parameters.get("middlebox")
-
-    qos = []
-    qos_metrics = parameters.get("qos_metric")
-    qos_value_unit = parameters.get("qos_value_unit")
-    for idx, q in enumerate(qos_metrics):
-        metric = {}
-        metric['name'] = q
-        metric['constraint'] = 'max'
-        print(qos_value_unit)
-        print(idx, q)
-        if qos_value_unit:
-            print(qos_value_unit[idx])
-            if isinstance(qos_value_unit[idx], basestring):
-                metric['value'] = qos_value_unit[idx]
-            else:
-                metric['value'] = str(qos_value_unit[idx]["qos_value"]["number-integer"]) + qos_value_unit[idx]["qos_unit"]
-            qos.append(metric)
-    print(qos)
-
-    start = parameters.get("start")
-    if isinstance(start, dict):
-        start = next(iter(parameters.get("start").values()), '').strip()
-
-    end = parameters.get("end")
-    if isinstance(end, dict):
-        end = next(iter(parameters.get("end").values()), '').strip()
-
-    allow = parameters.get("allow")
-    block = parameters.get("block")
-
-    return id, origin, destination, targets, middleboxes, qos, start, end, allow, block
-
-
-def get_feedback_params(req):
-    result = req.get("queryResult")
-    parameters = result.get("parameters")
-
-    original_intent = ""
-    entity = parameters.get("entity")
-    value = parameters.get("value")
-
-    return original_intent, entity, value
-
-
-def build_nile_intent(req):
-    id, origin, destination, targets, middleboxes, qos, start, end, allow, block = get_intent_params(req)
-
-    intent = translate(id, origin, destination, targets, middleboxes, qos, start, end, allow, block)
-    for op in config.NILE_OPERATIONS:
-        intent = intent.replace(op + " ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**" + op + "** ")
+    intent = interpreter.translate(entities)
+    for oper in config.NILE_OPERATIONS:
+        intent = intent.replace(oper + " ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**" + oper + "** ")
 
     speech = "Is this what you want?"
     print("Response:", speech + " " + intent)
@@ -111,8 +58,10 @@ def build_nile_intent(req):
     }
 
 
-def build_accepted(req):
-    print("accepted", req)
+def build_accepted(request):
+    """ Webhook action to deploy Nile intent after user confirmation """
+
+    print("accepted", request)
     return {
         "payload": {
             "google": {
@@ -131,9 +80,11 @@ def build_accepted(req):
     }
 
 
-def build_feedback(req):
-    print("feedback", req)
-    original_intent, entity, value = get_feedback_params(req)
+def build_feedback(request):
+    """ Webhook action to receive feedback from user after rejecting built intent """
+
+    print("feedback", request)
+    original_intent, entity, value = parser.parse_feedback(request)
     print("feedback", original_intent, entity, value)
     return {
         "payload": {
@@ -153,7 +104,7 @@ def build_feedback(req):
     }
 
 
-actions = {
+ACTIONS = {
     "build.nile": build_nile_intent,
     "build.build-yes": build_accepted,
     "build.build-no": build_feedback
