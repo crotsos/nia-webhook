@@ -83,9 +83,8 @@ def build_accepted(request):
 def build_feedback(request):
     """ Webhook action to receive feedback from user after rejecting built intent """
 
-    print("feedback", request)
-    original_intent, entity, value = parser.parse_feedback(request)
-    print("feedback", original_intent, entity, value)
+    feedback = parser.parse_feedback(request)
+    print("feedback", feedback)
     return {
         "payload": {
             "google": {
