@@ -2,7 +2,7 @@
 
 import parser
 
-import config
+import beautifier
 import interpreter
 
 
@@ -11,8 +11,7 @@ def build_nile_intent(request):
     entities = parser.parse_intent(request)
 
     intent = interpreter.translate(entities)
-    for oper in config.NILE_OPERATIONS:
-        intent = intent.replace(oper + " ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**" + oper + "** ")
+    beautified_intent = beautifier.beautify(intent)
 
     speech = "Is this what you want?"
     print("Response:", speech + " " + intent)
@@ -39,7 +38,7 @@ def build_nile_intent(request):
                         {
                             "basicCard": {
                                 "title": "Here is your intent.",
-                                "formattedText": intent
+                                "formattedText": beautified_intent
                             }
                         }
                     ]
@@ -107,5 +106,5 @@ def build_feedback(request):
 ACTIONS = {
     "build.nile": build_nile_intent,
     "build.build-yes": build_accepted,
-    "build.build-no": build_feedback
+    "build.build-no.feedback": build_feedback
 }
