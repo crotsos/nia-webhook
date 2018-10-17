@@ -7,6 +7,15 @@ def to_camel_case(string):
     return output[0].lower() + output[1:]
 
 
+def get_output_context(request, context_name):
+    """ Finds and returns a given output context """
+    output_contexts = request["outputContexts"]
+    for context in output_contexts:
+        if context_name in context["name"]:
+            return context
+    return None
+
+
 def parse_intent(request):
     """ Parses extracted entities from Dialogflow build_intent request """
 
@@ -61,10 +70,12 @@ def parse_feedback(request):
 
     result = request["queryResult"]
     parameters = result["parameters"]
+    output_context = get_output_context(request, "build-followup")
 
     feedback = {}
-    feedback["original_intent"] = ""
+    feedback["original_intent"] = output_context["parameters"]["inputText"]
+    feedback["nile_intent"] = output_context["parameters"]["intent"]
     feedback["entity"] = parameters["entity"]
-    feedback["value"] = parameters["value"]
+    feedback["value"] = parameters["any"]
 
     return feedback

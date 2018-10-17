@@ -48,9 +48,10 @@ def build_nile_intent(request):
         "outputContexts": [
             {
                 "name": "projects/nira-68681/agent/sessions/eeeadd4f-8905-fed6-7919-b28ee616bd51/contexts/build-followup",
-                "lifespanCount": 5,
+                "lifespanCount": 10,
                 "parameters": {
-                    "intent": intent
+                    "intent": intent,
+                    "inputText": request.get("queryResult").get("queryText")
                 }
             }
         ]

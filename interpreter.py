@@ -4,7 +4,7 @@
 def translate(entities):
     """ Translates extracted entities into a Nile intent """
 
-    intent = "define intent {}Intent: ".format(entities["id"])
+    intent = "define intent {}Intent:".format(entities["id"])
 
     if "origin" in entities and "destination" in entities:
         intent += " from endpoint('{}') to endpoint('{}')".format(entities["origin"], entities["destination"])
